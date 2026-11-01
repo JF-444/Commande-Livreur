@@ -3,13 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Liv Services Partenaires</title>
+<title>Liv Partenaires</title>
 <meta name="description" content="Commandez un livreur Liv Services en quelques secondes, partout à Yaoundé.">
-<meta name="theme-color" content="#0a3a27">
+<meta name="theme-color" content="#0F3D2E">
+<meta name="apple-mobile-web-app-title" content="Liv Partenaires">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="robots" content="noindex">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap">
 <script>
 /* =====================================================================
    CONFIGURATION
@@ -23,235 +28,224 @@ const CONFIG = {
 };
 </script>
 <style>
-/* Liv : vert forêt profond + jaune soleil. Hero vert plein, contenu sur fond clair, itinéraire en timeline. */
+/* DA Liv : vert forêt, crème, et les 4 couleurs du logo (orange, jaune, vert, vert profond). */
 :root{
-  --g950:#06261a; --g900:#0a3a27; --g800:#0e4d33; --g600:#13774c; --g500:#1a9a61; --g100:#dff1e6; --g50:#eff8f2;
-  --sun:#ffc21a; --sun-deep:#f2a900; --sun-ink:#2a1c00;
-  --bg:#f3f6f2; --surface:#ffffff; --ink:#0c1d15; --muted:#5a6b62; --line:#dde5df;
-  --danger:#c62828;
-  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
-  --body:"Manrope",ui-sans-serif,system-ui,sans-serif;
-  --r:18px; --shadow:0 1px 2px rgba(6,38,26,.06),0 12px 32px -12px rgba(6,38,26,.18);
+  --forest:#0F3D2E; --ink:#10231B; --cream:#F6F5EF; --paper:#FDFCF8;
+  --orange:#F28A1A; --yellow:#F5C01E; --green:#1E9E5A; --green2:#2E7A5C; --gtxt:#157A45;
+  --soft:#C8DCD2; --muted:#5B6A62; --line:#E2E4DC; --danger:#C0392B;
+  --display:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+  --body:"DM Sans",ui-sans-serif,system-ui,sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);-webkit-font-smoothing:antialiased;min-height:100vh}
+body{background:var(--cream);color:var(--ink);font:16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit;color:inherit}
-svg.i{width:1.25em;height:1.25em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+svg.i{width:1.2em;height:1.2em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .gut{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-.max{max-width:1100px;margin:0 auto}
+.max{max-width:1080px;margin:0 auto}
 [hidden]{display:none!important}
 
-/* ---------- Bande défilante ---------- */
-.ticker{background:var(--sun);color:var(--sun-ink);overflow:hidden;white-space:nowrap;padding-top:env(safe-area-inset-top)}
-.ticker-track{display:inline-flex;animation:tick 38s linear infinite;padding-block:9px}
-.ticker span{display:inline-flex;align-items:center;gap:12px;font:800 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding-right:28px}
-.ticker span svg{width:26px;height:16px;fill:var(--sun-ink)}
+/* Bande défilante */
+.ticker{background:var(--yellow);color:var(--ink);overflow:hidden;white-space:nowrap;padding-top:env(safe-area-inset-top)}
+.ticker-track{display:inline-flex;animation:tick 32s linear infinite;padding-block:9px}
+.ticker span{display:inline-flex;align-items:center;gap:14px;font:800 12.5px/1 var(--display);letter-spacing:.09em;text-transform:uppercase;padding-right:14px}
+.ticker i{width:8px;height:8px;border-radius:50%;flex:none}
 @keyframes tick{to{transform:translateX(-50%)}}
 
-/* ---------- En-tête ---------- */
-.top{background:var(--g900);color:#fff}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:16px}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit}
-.brand-mark{width:40px;height:40px;border-radius:12px;background:var(--sun);display:grid;place-items:center}
-.brand-mark svg{width:26px;height:26px}
-.brand b{display:block;font:800 19px/1 var(--display);letter-spacing:-.01em}
-.brand small{display:block;font:700 11px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:#a9d7bd;margin-top:4px}
-.who{display:flex;align-items:center;gap:8px}
-.chip-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;cursor:pointer}
-.chip-btn:hover{background:rgba(255,255,255,.12)}
+/* En-tête */
+.top{background:var(--forest);color:var(--cream);position:relative;overflow:hidden}
+.arcs{position:absolute;right:-60px;bottom:-60px;width:340px;height:340px;pointer-events:none;opacity:.95}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:16px;position:relative}
+.brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
+.brand-mark{width:44px;height:44px;border-radius:12px;background:var(--paper);display:grid;place-items:center}
+.brand-mark img{width:32px;height:32px}
+.brand b{display:block;font:800 18px/1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+.brand small{display:block;font:500 13px/1.2 var(--body);color:var(--soft);margin-top:4px}
+.chip-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(246,245,239,.22);background:transparent;color:var(--cream);border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;cursor:pointer}
 
-/* ---------- Hero (visiteur) ---------- */
-.hero{position:relative;overflow:hidden;padding-block:28px 64px}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,194,26,.14);color:var(--sun);border:1px solid rgba(255,194,26,.35);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
-.dot-live{width:8px;height:8px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 0 rgba(255,194,26,.7);animation:pulse 1.8s infinite}
-@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(255,194,26,0)}100%{box-shadow:0 0 0 0 rgba(255,194,26,0)}}
-.hero h1{font:800 clamp(38px,6vw,64px)/1 var(--display);letter-spacing:-.03em;margin:18px 0 16px;text-wrap:balance}
-.hero h1 em{font-style:normal;color:var(--sun)}
-.hero p.lead{color:#cfe6d9;font-size:18px;max-width:30em;margin:0}
-.perks{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding:0;list-style:none}
-.perks li{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14px}
-.perks svg{color:var(--sun)}
-.road{position:relative;height:84px;margin-top:34px;max-width:520px}
-.road::before{content:"";position:absolute;left:0;right:0;bottom:16px;border-bottom:3px dashed rgba(255,255,255,.28)}
-.road .pin{position:absolute;bottom:14px;width:28px;height:36px;color:var(--sun)}
-.road .pin.a{left:0;color:#7fd3a6}.road .pin.b{right:0}
-.road .moto{position:absolute;bottom:18px;left:0;width:76px;height:48px;animation:ride 6s cubic-bezier(.55,.05,.35,1) infinite}
-@keyframes ride{0%{transform:translateX(10px)}48%,52%{transform:translateX(min(440px,calc(100vw - 140px)))}100%{transform:translateX(10px) scaleX(1)}}
-.moto .wheel{transform-box:fill-box;transform-origin:center;animation:spin .5s linear infinite}
+/* Hero visiteur */
+.hero{position:relative;padding-block:18px 56px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.live{display:inline-flex;align-items:center;gap:10px;background:rgba(30,158,90,.18);color:#9fe3bd;border:1px solid rgba(30,158,90,.45);padding:7px 14px 7px 12px;border-radius:999px;font-weight:700;font-size:14px}
+.live b{color:#fff}
+.pulse{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow:0 0 0 0 rgba(61,220,132,.7);animation:pulse 1.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(61,220,132,0)}100%{box-shadow:0 0 0 0 rgba(61,220,132,0)}}
+.hero h1{font:800 clamp(40px,6.4vw,68px)/1.02 var(--display);letter-spacing:-.03em;margin:18px 0 14px;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--yellow)}
+.lead{color:var(--soft);font-size:18px;margin:0;max-width:28em}
+.ride{position:relative;height:150px;margin-top:24px;max-width:440px;background:var(--yellow);border-radius:24px;overflow:hidden}
+.ride .bike{position:absolute;left:calc(50% - 80px);bottom:-6px;width:160px;height:160px;animation:bob .6s ease-in-out infinite alternate}
+.ride .road{position:absolute;left:0;right:0;bottom:10px;height:4px;background:repeating-linear-gradient(90deg,rgba(15,61,46,.45) 0 22px,transparent 22px 40px);animation:road .4s linear infinite}
+@keyframes road{to{background-position:-40px 0}}
+@keyframes bob{to{transform:translateY(-3px)}}
+.bike .w{transform-box:fill-box;transform-origin:center;animation:spin .45s linear infinite}
+.bike .sp{animation:dash .5s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes dash{0%{transform:translateX(6px);opacity:.3}100%{transform:translateX(-10px);opacity:1}}
 
-/* ---------- Cartes ---------- */
-.card{background:var(--surface);color:var(--ink);border-radius:24px;box-shadow:var(--shadow);border:1px solid var(--line)}
-.auth{padding:8px 8px 24px}
-.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--g50);border-radius:16px;padding:5px;gap:5px}
-.tabs button{border:0;background:transparent;border-radius:12px;padding:12px;font-weight:800;cursor:pointer;color:var(--muted)}
-.tabs button[aria-selected="true"]{background:#fff;color:var(--g900);box-shadow:0 1px 3px rgba(6,38,26,.12)}
-.pane{padding:22px 16px 0;display:flex;flex-direction:column;gap:14px}
-.pane h2{font:800 24px/1.15 var(--display);letter-spacing:-.02em;margin:0}
-.pane .sub{color:var(--muted);font-size:14px;margin:-6px 0 2px}
-.field label{display:block;font-weight:800;font-size:13px;margin-bottom:6px;color:var(--g900)}
-.field input,.field select{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;font-size:16px;transition:border-color .15s,background .15s}
-.field input:focus,.field select:focus{outline:none;border-color:var(--g500);background:#fff;box-shadow:0 0 0 4px rgba(26,154,97,.14)}
+/* Cartes / formulaires */
+.card{background:var(--paper);color:var(--ink);border-radius:24px;border:1px solid var(--line);box-shadow:0 18px 40px -22px rgba(16,35,27,.35)}
+.auth{padding:8px 8px 22px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:#EEF0E8;border-radius:16px;padding:5px;gap:5px}
+.tabs button{border:0;background:transparent;border-radius:12px;padding:12px 6px;font-weight:700;cursor:pointer;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--forest);color:var(--cream)}
+.pane{padding:20px 14px 0;display:flex;flex-direction:column;gap:14px}
+.pane h2{font:800 23px/1.15 var(--display);margin:0}
+.sub{color:var(--muted);font-size:14px;margin:-6px 0 2px}
+.field label{display:block;font-weight:700;font-size:13px;margin-bottom:6px;color:var(--forest)}
+.field input,.field select{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;font-size:16px;min-width:0}
+.field input:focus,.field select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 4px rgba(30,158,90,.15)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.check{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
-.check input{width:18px;height:18px;accent-color:var(--g600)}
-.prefix{display:flex;align-items:stretch}
-.prefix span{display:grid;place-items:center;padding:0 12px;background:var(--g50);border:1.5px solid var(--line);border-right:0;border-radius:14px 0 0 14px;font-weight:800;font-size:14px;color:var(--g800)}
+.check{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--green)}
+.prefix{display:flex}
+.prefix span{display:grid;place-items:center;padding:0 12px;background:#EEF0E8;border:1.5px solid var(--line);border-right:0;border-radius:14px 0 0 14px;font-weight:700;font-size:14px;color:var(--forest)}
 .prefix input{border-radius:0 14px 14px 0!important}
-.err{display:flex;gap:8px;align-items:flex-start;color:var(--danger);font-weight:600;font-size:14px;margin:0}
-.btn{appearance:none;border:0;border-radius:16px;padding:16px 20px;font-weight:800;font-size:16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;transition:transform .12s,box-shadow .2s,background .2s}
-.btn:active{transform:scale(.98)}
-.btn-green{background:var(--g800);color:#fff}
-.btn-green:hover{background:var(--g900)}
-.btn-sun{background:var(--sun);color:var(--sun-ink);box-shadow:0 10px 24px -10px rgba(242,169,0,.8)}
-.btn-sun:hover{background:#ffcb3d}
-.btn-soft{background:var(--g50);color:var(--g800)}
-.btn-line{background:transparent;color:var(--g800);border:1.5px dashed #b7cfc1;width:100%}
-.btn-line:hover{border-color:var(--g500);background:var(--g50)}
+.err{display:flex;gap:8px;align-items:flex-start;color:var(--danger);font-weight:500;font-size:14px;margin:0}
+.btn{appearance:none;border:0;border-radius:999px;padding:16px 22px;font:700 16px/1 var(--body);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;transition:transform .12s,background .2s}
+.btn:active{transform:scale(.97)}
+.btn-forest{background:var(--forest);color:var(--cream)}
+.btn-orange{background:var(--orange);color:var(--ink)}
+.btn-soft{background:#EEF0E8;color:var(--forest)}
+.btn-line{background:transparent;color:var(--forest);border:2px dashed #B9CDBF;border-radius:16px;width:100%}
 .btn[disabled]{cursor:not-allowed}
 .btn-block{width:100%}
 .spin{width:18px;height:18px;border:2.5px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
 
-/* ---------- Comment ça marche ---------- */
-.how{padding-block:56px 40px}
-.how h2{font:800 30px/1.1 var(--display);letter-spacing:-.02em;margin:0 0 24px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;list-style:none;padding:0;margin:0;counter-reset:s}
-.steps li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;counter-increment:s;position:relative}
-.steps li::before{content:counter(s);position:absolute;top:18px;right:20px;font:800 44px/1 var(--display);color:var(--g100)}
-.steps .ic{width:46px;height:46px;border-radius:14px;background:var(--g900);color:var(--sun);display:grid;place-items:center;margin-bottom:14px}
-.steps h3{font:800 18px/1.2 var(--display);margin:0 0 6px}
+/* Comment ça marche */
+.how{padding-block:48px 32px}
+.how h2{font:800 28px/1.1 var(--display);margin:0 0 20px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;list-style:none;padding:0;margin:0}
+.steps li{background:var(--paper);border-radius:20px;padding:22px;border-top:8px solid var(--c)}
+.steps .n{font:800 15px/1 var(--display);color:var(--c2,var(--c));letter-spacing:.08em}
+.steps h3{font:800 19px/1.2 var(--display);margin:10px 0 6px}
 .steps p{margin:0;color:var(--muted);font-size:15px}
 
-/* ---------- Tableau de bord ---------- */
-.dash-hero{padding-block:8px 70px}
+/* Tableau de bord */
+.dash-hero{padding-block:4px 64px;position:relative}
 .hello{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
-.hello p{margin:0;color:#a9d7bd;font-weight:700}
-.hello h1{font:800 clamp(28px,4.5vw,42px)/1.05 var(--display);letter-spacing:-.025em;margin:4px 0 0;text-wrap:balance}
-.status{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-weight:800;font-size:13px}
-.status.ok{background:rgba(127,211,166,.16);color:#9ff0c3;border:1px solid rgba(127,211,166,.35)}
-.status.wait{background:rgba(255,194,26,.15);color:var(--sun);border:1px solid rgba(255,194,26,.4)}
-.dash{margin-top:-46px;display:grid;grid-template-columns:1.25fr .75fr;gap:20px;align-items:start;padding-bottom:120px}
+.hello p{margin:0;color:var(--soft);font-weight:500}
+.hello h1{font:800 clamp(28px,4.5vw,40px)/1.05 var(--display);margin:2px 0 6px;text-wrap:balance}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;color:var(--soft);font-size:14px}
+.meta span{display:inline-flex;align-items:center;gap:6px}
+.status{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-weight:700;font-size:13px}
+.status.ok{background:var(--green);color:#fff}
+.status.wait{background:var(--yellow);color:var(--ink)}
+.dash{margin-top:-40px;display:grid;grid-template-columns:1.3fr .7fr;gap:18px;align-items:start;padding-bottom:120px;position:relative}
 .dash > *{min-width:0}
-.pending{display:flex;gap:14px;align-items:flex-start;background:#fff8e1;border:1px solid #ffe08a;border-radius:var(--r);padding:16px 18px;margin-bottom:16px}
-.pending .ic{width:42px;height:42px;border-radius:12px;background:var(--sun);color:var(--sun-ink);display:grid;place-items:center;flex:none}
-.pending h3{margin:0 0 2px;font:800 17px/1.25 var(--display)}
+.pending{display:flex;gap:14px;align-items:flex-start;background:#FFF6DA;border:1px solid #F5D778;border-radius:20px;padding:16px 18px;margin-bottom:14px}
+.pending .ic{width:40px;height:40px;border-radius:12px;background:var(--yellow);display:grid;place-items:center;flex:none}
+.pending h3{margin:0 0 2px;font:800 16px/1.25 var(--display)}
 .pending p{margin:0 0 10px;font-size:14px;color:#5c4a12}
-.pending .btn{padding:9px 14px;font-size:14px;border-radius:12px}
-.order{padding:24px}
-.order-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
-.order-h h2{margin:0;font:800 24px/1.1 var(--display);letter-spacing:-.02em}
-.count{font:800 13px/1 var(--body);background:var(--g900);color:var(--sun);padding:8px 12px;border-radius:999px;white-space:nowrap}
-
-/* timeline itinéraire */
-.route{list-style:none;margin:0;padding:0;position:relative}
-.stop{position:relative;display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:end;padding-bottom:16px}
-.stop.new{animation:pop .28s ease-out}
+.pending .btn{padding:10px 14px;font-size:14px}
+.order{padding:22px}
+.order-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.order-h h2{margin:0;font:800 23px/1.1 var(--display)}
+.count{font:700 13px/1 var(--body);background:var(--forest);color:var(--yellow);padding:8px 12px;border-radius:999px;white-space:nowrap}
+.stops{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:10px}
+.stop{display:grid;grid-template-columns:40px 1fr;gap:12px;background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:12px}
+.stop.new{animation:pop .25s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}}
-.stop::after{content:"";position:absolute;left:21px;top:46px;bottom:-2px;border-left:2.5px dashed #c4d6cb}
-.stop.last::after{display:none}
-.node{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;align-self:end}
-.node.pick{background:var(--g900);color:var(--sun)}
-.node.drop{background:var(--sun);color:var(--sun-ink);font:800 16px/1 var(--display)}
-.stop .field{min-width:0}
-.rm{width:44px;height:48px;border:0;border-radius:14px;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center}
-.rm:hover{background:#fdecec;color:var(--danger)}
+.num{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:800 16px/1 var(--display);color:#fff}
+.stop-body{display:grid;grid-template-columns:1fr 150px auto;gap:10px;align-items:end;min-width:0}
+.stop-body .field{min-width:0}
+.rm{width:40px;height:48px;border:0;border-radius:12px;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center}
+.rm:hover{background:#FBE9E7;color:var(--danger)}
 .rm[disabled]{visibility:hidden}
-.add-row{display:grid;grid-template-columns:44px 1fr;gap:12px;margin-bottom:22px}
-.when-t{font-weight:800;font-size:13px;color:var(--g900);margin:0 0 8px}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.seg input{position:absolute;opacity:0;pointer-events:none}
-.seg label{display:flex;align-items:center;justify-content:center;gap:7px;padding:13px 8px;border-radius:14px;border:1.5px solid var(--line);cursor:pointer;font-weight:700;font-size:14.5px;white-space:nowrap;background:var(--bg)}
-.seg input:checked+label{border-color:var(--g600);background:var(--g50);color:var(--g900);box-shadow:inset 0 0 0 1px var(--g600)}
-.seg input:focus-visible+label{outline:3px solid rgba(26,154,97,.35)}
-.later{margin-top:12px}
 
-/* barre d'action collante */
-.cta{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:max(12px,env(safe-area-inset-bottom))}
-.cta-in{display:flex;align-items:center;gap:16px;padding-top:12px}
+/* barre collante */
+.cta{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--forest);color:var(--cream);padding-bottom:max(12px,env(safe-area-inset-bottom))}
+.cta-in{display:flex;align-items:center;gap:14px;padding-top:12px}
 .cta-sum{flex:1;min-width:0}
 .cta-sum b{display:block;font:800 18px/1.1 var(--display)}
-.cta-sum span{display:block;color:var(--muted);font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cta .btn{padding:16px 22px;font-size:16px;white-space:nowrap}
-.cta .btn.locked{background:#e7ece9;color:#7d8c84;box-shadow:none}
+.cta-sum span{display:block;color:var(--soft);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cta .btn{white-space:nowrap}
+.cta .btn.locked{background:rgba(246,245,239,.14);color:var(--soft)}
 
-/* historique */
-.side{display:flex;flex-direction:column;gap:20px}
-.hist{padding:22px}
-.hist h2{margin:0 0 14px;font:800 19px/1.2 var(--display)}
+/* colonne latérale */
+.side{display:flex;flex-direction:column;gap:18px}
+.promise{background:var(--orange);color:var(--ink);border-radius:20px;padding:20px 20px 18px;position:relative;overflow:hidden}
+.promise b{display:block;font:800 38px/1 var(--display)}
+.promise p{margin:6px 0 0;font-size:14px;font-weight:500;max-width:15em}
+.promise svg{position:absolute;right:-8px;bottom:-4px;width:118px;height:118px}
+.hist{padding:20px}
+.hist h2{margin:0 0 12px;font:800 18px/1.2 var(--display)}
 .hist ul{list-style:none;margin:0;padding:0}
-.hist li{display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.hist li{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
 .hist li:first-child{border-top:0}
-.hist .hi{width:38px;height:38px;border-radius:12px;background:var(--g50);color:var(--g600);display:grid;place-items:center}
+.hist b{display:block;font-size:14px}
 .hist .t{min-width:0}
-.hist .t b{display:block;font-size:14px}
 .hist .t span{display:block;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hist .n{font:800 15px/1 var(--display);font-variant-numeric:tabular-nums;color:var(--g800)}
+.hist .n{font:800 14px/1 var(--display);color:var(--gtxt);font-variant-numeric:tabular-nums}
 .empty{color:var(--muted);font-size:14px;margin:0}
-.promise{background:var(--g900);color:#fff;border-radius:var(--r);padding:22px;position:relative;overflow:hidden}
-.promise b{display:block;font:800 40px/1 var(--display);color:var(--sun);letter-spacing:-.02em}
-.promise p{margin:6px 0 0;color:#cfe6d9;font-size:14px;max-width:16em}
-.promise svg.big{position:absolute;right:-6px;bottom:6px;width:120px;height:78px;opacity:.95}
 
 /* confirmation */
-.done{max-width:520px;margin:-46px auto 0;padding:32px 24px;text-align:center}
-.done .moto-wrap{height:80px;position:relative;margin:0 auto 6px;width:200px;overflow:hidden}
-.done .moto-wrap svg{position:absolute;left:0;bottom:4px;width:90px;height:56px;animation:zoom 2.4s ease-in-out infinite}
-@keyframes zoom{0%{transform:translateX(-90px)}50%{transform:translateX(55px)}100%{transform:translateX(210px)}}
-.done h2{font:800 28px/1.1 var(--display);letter-spacing:-.02em;margin:0 0 8px}
-.done p{color:var(--muted);margin:0 0 18px}
-.recap{text-align:left;background:var(--bg);border-radius:16px;padding:16px 18px;margin-bottom:18px;font-size:14px}
+.done{max-width:520px;margin:-40px auto 40px;padding:28px 22px;text-align:center;position:relative}
+.done .ride{margin:0 auto 14px;height:120px;max-width:300px}
+.done .ride .bike{left:0;width:130px;height:130px;animation:go 2.6s ease-in-out infinite}
+@keyframes go{0%{transform:translateX(-150px)}45%,55%{transform:translateX(60px)}100%{transform:translateX(280px)}}
+.done h2{font:800 27px/1.1 var(--display);margin:0 0 8px}
+.done p{color:var(--muted);margin:0 0 16px}
+.recap{text-align:left;background:var(--cream);border-radius:16px;padding:14px 16px;margin-bottom:16px;font-size:14px}
 .recap div{display:flex;justify-content:space-between;gap:16px;padding:5px 0}
 .recap div span:first-child{color:var(--muted)}
 .recap div span:last-child{font-weight:700;text-align:right}
 .done .btns{display:flex;flex-direction:column;gap:10px}
 
-footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:center}
-:focus-visible{outline:3px solid rgba(26,154,97,.45);outline-offset:2px}
+footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:center}
+:focus-visible{outline:3px solid rgba(30,158,90,.5);outline-offset:2px}
 
 @media (max-width:860px){
   .hero-grid,.dash{grid-template-columns:1fr}
-  .hero{padding-block:20px 40px}
   .steps{grid-template-columns:1fr}
   .side{flex-direction:column-reverse}
+  .arcs{width:200px;height:200px;right:-90px;bottom:auto;top:30px;opacity:.3}
 }
-@media (max-width:480px){
+@media (max-width:520px){
   .row2{grid-template-columns:1fr}
-  .order{padding:18px 14px}
-  .cta-in{gap:10px}
-  .cta .btn{padding:15px 16px}
-  .cta .btn .lbl-long{display:none}
-  .road{display:none}
+  .order{padding:16px 12px}
+  .stop{grid-template-columns:1fr;padding:12px}
+  .stop .num{display:none}
+  .stop-body{grid-template-columns:1fr 40px;gap:8px}
+  .stop-body .field:first-child{grid-column:1/-1}
+  .stop-body label .pre{display:inline}
+  .rm{height:50px}
+  .cta .btn .long{display:none}
+  .ride{height:130px}.ride .bike{width:140px;height:140px;left:calc(50% - 70px)}
 }
-@media (min-width:481px){.cta .btn .lbl-short{display:none}}
+@media (min-width:521px){.cta .btn .short{display:none}.stop-body label .pre{display:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="moto" viewBox="0 0 76 48">
-    <rect x="3" y="8" width="22" height="18" rx="3" fill="#ffc21a" stroke="#06261a" stroke-width="2.5"/>
-    <path d="M8 14h12" stroke="#06261a" stroke-width="2.5" stroke-linecap="round"/>
-    <path d="M14 38h26l8-14h8" fill="none" stroke="#06261a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M22 30h22l4-6" fill="#1a9a61" stroke="#06261a" stroke-width="2.5" stroke-linejoin="round"/>
-    <path d="M52 24l4-12h6" fill="none" stroke="#06261a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    <g class="wheel"><circle cx="14" cy="38" r="8" fill="#fff" stroke="#06261a" stroke-width="3"/><path d="M14 31v14M7 38h14" stroke="#06261a" stroke-width="1.5"/></g>
-    <g class="wheel"><circle cx="60" cy="38" r="8" fill="#fff" stroke="#06261a" stroke-width="3"/><path d="M60 31v14M53 38h14" stroke="#06261a" stroke-width="1.5"/></g>
+  <!-- Moto + livreur en action (même dessin que l'icône) -->
+  <symbol id="bike" viewBox="0 0 180 180">
+    <g class="sp" stroke="#F5C01E" stroke-linecap="round" stroke-width="6"><path d="M14 74h24M6 94h24M16 114h18"/></g>
+    <rect x="44" y="52" width="44" height="40" rx="7" fill="#1E9E5A" stroke="#0F3D2E" stroke-width="5"/>
+    <path d="M52 66q14-10 28 0" fill="none" stroke="#F28A1A" stroke-width="5" stroke-linecap="round"/>
+    <path d="M54 78q12-8 24 0" fill="none" stroke="#F6F5EF" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="112" cy="44" r="13" fill="#0F3D2E"/>
+    <path d="M99 40q13-14 27-2l6 2h-33z" fill="#1E9E5A" stroke="#0F3D2E" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M104 58q10-4 18 4l10 22-10 4-10-16z" fill="#1E9E5A" stroke="#0F3D2E" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M118 66l18 10" stroke="#0F3D2E" stroke-width="6" stroke-linecap="round"/>
+    <path d="M108 86l-6 24h22" fill="none" stroke="#0F3D2E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M40 118h34l14-8h34l12-18" fill="none" stroke="#0F3D2E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M70 104h50l-6 14H64z" fill="#1E9E5A" stroke="#0F3D2E" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M134 92l6-16h10" fill="none" stroke="#0F3D2E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="w"><circle cx="50" cy="132" r="17" fill="#F6F5EF" stroke="#0F3D2E" stroke-width="8"/><path d="M50 120v24M38 132h24" stroke="#0F3D2E" stroke-width="3"/></g>
+    <g class="w"><circle cx="140" cy="132" r="17" fill="#F6F5EF" stroke="#0F3D2E" stroke-width="8"/><path d="M140 120v24M128 132h24" stroke="#0F3D2E" stroke-width="3"/></g>
   </symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
-  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 10v10h16V10"/><path d="M3 10l2-6h14l2 6"/><path d="M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
   <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
   <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></symbol>
-  <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></symbol>
-  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.6-4.5L4 8"/><path d="M4 3v5h5"/><path d="M4 13a8 8 0 0 0 14.6 4.5L20 16"/><path d="M20 21v-5h-5"/></symbol>
   <symbol id="i-out" viewBox="0 0 24 24"><path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4"/><path d="M10 16l-4-4 4-4M6 12h10"/></symbol>
   <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></symbol>
@@ -261,33 +255,22 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
 <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
 
 <div class="top">
+  <svg class="arcs" viewBox="0 0 340 340" aria-hidden="true"><g fill="none" stroke-width="30"><circle cx="340" cy="340" r="300" stroke="#F28A1A"/><circle cx="340" cy="340" r="245" stroke="#F5C01E"/><circle cx="340" cy="340" r="190" stroke="#1E9E5A"/><circle cx="340" cy="340" r="135" stroke="#2E7A5C"/></g></svg>
   <div class="gut"><div class="max bar">
     <a class="brand" href="#">
-      <span class="brand-mark"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M7 5v14h11" fill="none" stroke="#06261a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8h7M16 12.5h5" stroke="#06261a" stroke-width="2.6" stroke-linecap="round"/></svg></span>
+      <span class="brand-mark"><img alt="" src="logo.png"></span>
       <span><b>Liv Services</b><small>Espace partenaires</small></span>
     </a>
-    <div class="who">
-      <button class="chip-btn" id="logoutBtn" hidden><svg class="i"><use href="#i-out"/></svg><span>Déconnexion</span></button>
-    </div>
+    <button class="chip-btn" id="logoutBtn" hidden><svg class="i"><use href="#i-out"/></svg>Déconnexion</button>
   </div></div>
 
-  <!-- HERO VISITEUR -->
   <section class="hero gut" id="vGuest" hidden>
     <div class="max hero-grid">
       <div>
-        <span class="eyebrow"><span class="dot-live"></span>Livreurs disponibles à Yaoundé</span>
+        <span class="live"><span class="pulse"></span><b>2 livreurs</b> à proximité</span>
         <h1>Votre livreur en <em>moins de 20&nbsp;min.</em></h1>
-        <p class="lead">Indiquez vos quartiers de livraison, appuyez sur Commander : un livreur Liv arrive chez vous.</p>
-        <ul class="perks">
-          <li><svg class="i"><use href="#i-bolt"/></svg>Commande en 30 secondes</li>
-          <li><svg class="i"><use href="#i-map"/></svg>Partout à Yaoundé</li>
-          <li><svg class="i"><use href="#i-chat"/></svg>Confirmé sur WhatsApp</li>
-        </ul>
-        <div class="road" aria-hidden="true">
-          <svg class="pin a i" style="stroke-width:2.2"><use href="#i-store"/></svg>
-          <svg class="moto"><use href="#moto"/></svg>
-          <svg class="pin b i" style="stroke-width:2.2"><use href="#i-pin"/></svg>
-        </div>
+        <p class="lead">Ajoutez vos quartiers de livraison, appuyez sur Commander : un livreur Liv passe chez vous.</p>
+        <div class="ride" aria-hidden="true"><div class="road"></div><svg class="bike"><use href="#bike"/></svg></div>
       </div>
 
       <div class="card auth">
@@ -295,24 +278,22 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
           <button role="tab" id="tLogin" aria-selected="true">Se connecter</button>
           <button role="tab" id="tSignup" aria-selected="false">Devenir partenaire</button>
         </div>
-
         <form class="pane" id="loginForm" novalidate>
-          <div><h2>Bon retour</h2></div>
-          <p class="sub">Connectez-vous avec votre numéro de téléphone (ou identifiant) et votre code.</p>
+          <h2>Bon retour</h2>
+          <p class="sub">Votre numéro de téléphone et votre code à 6 chiffres.</p>
           <div class="field"><label for="lgId">Téléphone ou identifiant</label><input id="lgId" autocomplete="username" placeholder="6XX XX XX XX"></div>
           <div class="field"><label for="lgCode">Code d'accès</label><input id="lgCode" type="password" inputmode="numeric" maxlength="12" autocomplete="current-password" placeholder="6 chiffres"></div>
           <p class="err" id="lgErr" hidden></p>
-          <button class="btn btn-green btn-block" type="submit" id="lgBtn">Se connecter</button>
+          <button class="btn btn-forest btn-block" type="submit" id="lgBtn">Se connecter</button>
         </form>
-
         <form class="pane" id="signupForm" novalidate hidden>
-          <div><h2>Devenez partenaire Liv</h2></div>
-          <p class="sub">Inscription gratuite. Vous pourrez commander dès que notre équipe aura validé votre compte.</p>
+          <h2>Devenez partenaire Liv</h2>
+          <p class="sub">Gratuit. Vous pourrez commander dès que notre équipe aura validé votre compte.</p>
           <div class="field"><label for="suNom">Nom du commerce</label><input id="suNom" autocomplete="organization" placeholder="Ex : Restaurant Le Mballa"></div>
           <div class="row2">
             <div class="field"><label for="suType">Type d'activité</label>
               <select id="suType"><option value="">Choisir…</option><option>Restaurant</option><option>Boutique</option><option>Supermarché</option><option>Pharmacie</option><option>E-commerce</option><option>Pâtisserie / Boulangerie</option><option>Autre</option></select></div>
-            <div class="field"><label for="suQuartier">Quartier du commerce</label><input id="suQuartier" list="quartiers" placeholder="Ex : Bastos"></div>
+            <div class="field"><label for="suQuartier">Quartier (adresse de retrait)</label><input id="suQuartier" list="quartiers" placeholder="Ex : Bastos"></div>
           </div>
           <div class="field"><label for="suResp">Nom du responsable</label><input id="suResp" autocomplete="name" placeholder="Prénom et nom"></div>
           <div class="field"><label for="suTel">Numéro de téléphone</label><div class="prefix"><span>+237</span><input id="suTel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="6XX XX XX XX"></div></div>
@@ -323,34 +304,34 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
             <div class="field"><label for="suCode2">Confirmez le code</label><input id="suCode2" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="6 chiffres"></div>
           </div>
           <p class="err" id="suErr" hidden></p>
-          <button class="btn btn-sun btn-block" type="submit" id="suBtn">Envoyer ma demande</button>
+          <button class="btn btn-orange btn-block" type="submit" id="suBtn">Envoyer ma demande</button>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- HERO CONNECTÉ -->
   <section class="dash-hero gut" id="vDashHero" hidden>
     <div class="max hello">
-      <div><p>Bonjour,</p><h1 id="partnerName"></h1></div>
+      <div>
+        <p>Bonjour,</p><h1 id="partnerName"></h1>
+        <div class="meta"><span id="metaAddr"><svg class="i"><use href="#i-pin"/></svg><b></b></span><span id="metaTel"><svg class="i"><use href="#i-phone"/></svg><b></b></span></div>
+      </div>
       <span class="status" id="statusPill"></span>
     </div>
   </section>
 </div>
 
-<!-- COMMENT ÇA MARCHE (visiteur) -->
 <section class="how gut" id="vHow" hidden>
   <div class="max">
     <h2>Comment ça marche</h2>
     <ol class="steps">
-      <li><div class="ic"><svg class="i"><use href="#i-pin"/></svg></div><h3>Ajoutez vos lieux</h3><p>Un quartier par livraison : Essos, Bastos, Odza… autant que nécessaire.</p></li>
-      <li><div class="ic"><svg class="i"><use href="#i-bolt"/></svg></div><h3>Commandez</h3><p>Votre demande part directement au support Liv sur WhatsApp, déjà rédigée.</p></li>
-      <li><div class="ic"><svg class="i"><use href="#i-box"/></svg></div><h3>Le livreur arrive</h3><p>Un livreur Liv passe récupérer vos colis en moins de 20 minutes.</p></li>
+      <li style="--c:#F28A1A;--c2:#B85F00"><span class="n">ÉTAPE 1</span><h3>Ajoutez vos livraisons</h3><p>Pour chaque livraison : le quartier et l'heure souhaitée.</p></li>
+      <li style="--c:#F5C01E;--c2:#8A6A00"><span class="n">ÉTAPE 2</span><h3>Commandez</h3><p>La demande part au support Liv sur WhatsApp, avec votre adresse et votre numéro.</p></li>
+      <li style="--c:#1E9E5A;--c2:#157A45"><span class="n">ÉTAPE 3</span><h3>Le livreur arrive</h3><p>Un livreur Liv passe récupérer vos colis en moins de 20 minutes.</p></li>
     </ol>
   </div>
 </section>
 
-<!-- TABLEAU DE BORD -->
 <main class="gut" id="vDash" hidden>
   <div class="max dash">
     <div>
@@ -358,33 +339,22 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
         <div class="ic"><svg class="i"><use href="#i-hourglass"/></svg></div>
         <div>
           <h3>Votre compte est en cours de validation</h3>
-          <p>Vous pouvez déjà préparer vos courses. Le bouton Commander s'activera dès que Liv Services aura validé votre accès.</p>
+          <p>Vous pouvez déjà préparer vos livraisons. Le bouton Commander s'activera dès que Liv Services aura validé votre accès.</p>
           <button class="btn btn-soft" id="refreshBtn" type="button"><svg class="i"><use href="#i-refresh"/></svg>Vérifier mon statut</button>
         </div>
       </div>
-
       <section class="card order" aria-labelledby="orderTitle">
         <div class="order-h"><h2 id="orderTitle">Nouvelle course</h2><span class="count" id="countPill">1 livraison</span></div>
-        <ol class="route" id="route"></ol>
-        <div class="add-row"><span></span><button class="btn btn-line" type="button" id="addStop"><svg class="i"><use href="#i-plus"/></svg>Ajouter une livraison</button></div>
-        <p class="when-t">Heure souhaitée</p>
-        <div class="seg">
-          <input type="radio" name="when" id="wNow" value="now" checked><label for="wNow"><svg class="i"><use href="#i-bolt"/></svg>Dès que possible</label>
-          <input type="radio" name="when" id="wLater" value="later"><label for="wLater"><svg class="i"><use href="#i-clock"/></svg>Programmer</label>
-        </div>
-        <div class="row2 later" id="laterBox" hidden>
-          <div class="field"><label for="day">Jour</label><select id="day"><option value="0">Aujourd'hui</option><option value="1">Demain</option></select></div>
-          <div class="field"><label for="time">Heure</label><input type="time" id="time" value="12:00"></div>
-        </div>
+        <ol class="stops" id="stops"></ol>
+        <button class="btn btn-line" type="button" id="addStop"><svg class="i"><use href="#i-plus"/></svg>Ajouter une livraison</button>
         <p class="err" id="orderErr" hidden style="margin-top:14px"></p>
       </section>
     </div>
-
     <aside class="side">
       <div class="promise">
         <b>&lt; 20 min</b>
-        <p>Un livreur Liv à votre point de retrait, partout à Yaoundé.</p>
-        <svg class="big" aria-hidden="true"><use href="#moto"/></svg>
+        <p>Un livreur Liv chez vous, partout à Yaoundé.</p>
+        <svg aria-hidden="true"><use href="#bike"/></svg>
       </div>
       <section class="card hist">
         <h2>Mes dernières courses</h2>
@@ -393,31 +363,28 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
       </section>
     </aside>
   </div>
-
-  <div class="cta gut" id="ctaBar">
+  <div class="cta gut">
     <div class="max cta-in">
       <div class="cta-sum"><b id="ctaCount">1 livraison</b><span id="ctaWhen">Dès que possible</span></div>
-      <button class="btn btn-sun" id="orderBtn" type="button"><svg class="i"><use href="#i-bolt"/></svg><span class="lbl-long">Commander un livreur</span><span class="lbl-short">Commander</span></button>
+      <button class="btn btn-orange" id="orderBtn" type="button"><svg class="i"><use href="#i-bolt"/></svg><span class="long">Commander un livreur</span><span class="short">Commander</span></button>
     </div>
   </div>
 </main>
 
-<!-- CONFIRMATION -->
 <main class="gut" id="vDone" hidden>
   <section class="card done">
-    <div class="moto-wrap" aria-hidden="true"><svg><use href="#moto"/></svg></div>
+    <div class="ride" aria-hidden="true"><div class="road"></div><svg class="bike"><use href="#bike"/></svg></div>
     <h2>Plus qu'une étape</h2>
-    <p>WhatsApp s'est ouvert avec votre demande déjà écrite. <b>Appuyez sur Envoyer</b> pour que le support Liv reçoive la course.</p>
+    <p>WhatsApp s'est ouvert avec votre demande déjà écrite. <b>Appuyez sur Envoyer</b> pour que le support Liv la reçoive.</p>
     <div class="recap" id="recap"></div>
     <div class="btns">
-      <a class="btn btn-green" id="waAgain" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>Rouvrir WhatsApp</a>
+      <a class="btn btn-forest" id="waAgain" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>Rouvrir WhatsApp</a>
       <button class="btn btn-soft" id="newOrder" type="button"><svg class="i"><use href="#i-plus"/></svg>Nouvelle course</button>
     </div>
   </section>
 </main>
 
-<footer class="gut" id="foot">Liv Services · Livraison à Yaoundé · Support WhatsApp +237 676 17 82 99</footer>
-
+<footer class="gut" id="foot">Liv Services · Livraison à Yaoundé · Support +237 676 17 82 99</footer>
 <datalist id="quartiers"></datalist>
 
 <script>
@@ -431,22 +398,22 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
   const pad = n => String(n).padStart(2,"0");
   const fmtDate = d => `${pad(d.getDate())}/${pad(d.getMonth()+1)} à ${pad(d.getHours())}h${pad(d.getMinutes())}`;
   const digits = s => (s||"").replace(/\D/g,"").replace(/^237(?=\d{9}$)/,"");
-  const icon = (id, cls="i") => `<svg class="${cls}"><use href="#${id}"/></svg>`;
+  const fmtTel = t => t ? "+237 " + t.replace(/^(\d)(\d{2})(\d{2})(\d{2})(\d{2})$/,"$1 $2 $3 $4 $5") : "";
+  const icon = id => `<svg class="i"><use href="#${id}"/></svg>`;
   const showErr = (el, msg) => { el.innerHTML = icon("i-alert") + "<span></span>"; el.lastChild.textContent = msg; el.hidden = false; };
+  const COLORS = ["#F28A1A","#E0A800","#1E9E5A","#2E7A5C"];
 
   /* Bande défilante */
-  const msgs = ["Votre livreur en moins de 20 min","Partout à Yaoundé","Commande en 30 secondes","Confirmation sur WhatsApp","Plusieurs livraisons en une course"];
-  const one = msgs.map(m => `<span><svg viewBox="0 0 76 48"><use href="#moto"/></svg>${m}</span>`).join("");
+  const msgs = ["Votre livreur en moins de 20 min","2 livreurs à proximité","Partout à Yaoundé","Plusieurs livraisons en une course","Confirmation sur WhatsApp"];
+  const one = msgs.map((m,i) => `<span><i style="background:${["#F28A1A","#1E9E5A","#0F3D2E","#2E7A5C","#F28A1A"][i]}"></i>${m}</span>`).join("");
   $("ticker").innerHTML = one + one;
 
-  /* Quartiers de Yaoundé (suggestions) */
   const Q = ["Ahala","Anguissa","Awae","Bastos","Biteng","Biyem-Assi","Briqueterie","Centre-ville","Cité Verte","Damas","Efoulan","Ekié","Ekoumdoum","Ekounou","Elig-Edzoa","Elig-Effa","Elig-Essono","Emana","Essos","Etetak","Etoa-Meki","Etoudi","Etoug-Ebe","Febe","Golf","Hippodrome","Jouvence","Kondengui","Madagascar","Mballa II","Melen","Mendong","Messa","Messassi","Mimboman","Mokolo","Mvan","Mvog-Ada","Mvog-Atangana Mballa","Mvog-Betsi","Mvog-Mbi","Mvolyé","Ngoa-Ekellé","Ngousso","Nkoabang","Nkolbisson","Nkoldongo","Nkolmesseng","Nkomo","Nlongkak","Nsam","Nsimeyong","Nyom","Obili","Odza","Olembe","Omnisport","Oyom-Abang","Santa Barbara","Simbock","Tsinga"];
   $("quartiers").innerHTML = Q.map(q => `<option value="${q}">`).join("");
 
-  /* ---------- État ---------- */
   let partner = store.get("liv_partner", null);
   let hist = [];
-  let stops = [""];
+  let stops = [];
 
   async function api(params, body){
     const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 15000);
@@ -464,13 +431,15 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
     $("vDashHero").hidden = guest;
     $("vDash").hidden = v !== "dash"; $("vDone").hidden = v !== "done";
     $("logoutBtn").hidden = guest;
-    $("foot").style.paddingBottom = v === "dash" ? "120px" : "";
+    $("foot").style.paddingBottom = v === "dash" ? "110px" : "";
     if(!guest) renderPartner();
     window.scrollTo({top:0});
   }
 
   function renderPartner(){
     $("partnerName").textContent = partner.nom;
+    $("metaAddr").hidden = !partner.quartier; $("metaAddr").querySelector("b").textContent = partner.quartier || "";
+    $("metaTel").hidden = !partner.tel; $("metaTel").querySelector("b").textContent = fmtTel(partner.tel);
     const ok = partner.statut === "OUI";
     const pill = $("statusPill");
     pill.className = "status " + (ok ? "ok" : "wait");
@@ -478,13 +447,14 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
     $("pendingBox").hidden = ok;
     if(ok) $("orderErr").hidden = true;
     const btn = $("orderBtn");
-    btn.classList.toggle("locked", !ok); btn.classList.toggle("btn-sun", ok);
-    btn.querySelector(".i use").setAttribute("href", ok ? "#i-bolt" : "#i-lock");
-    btn.title = ok ? "" : "Disponible après validation de votre compte";
+    btn.classList.toggle("locked", !ok); btn.classList.toggle("btn-orange", ok);
+    btn.querySelector("use").setAttribute("href", ok ? "#i-bolt" : "#i-lock");
     renderHist();
   }
 
-  /* ---------- Onglets ---------- */
+  function fromRes(res, code){ return { id: res.id, nom: res.nom, statut: res.statut, quartier: res.quartier || "", tel: res.telephone || "", code }; }
+
+  /* Onglets */
   function tab(signup){
     $("tLogin").setAttribute("aria-selected", !signup); $("tSignup").setAttribute("aria-selected", signup);
     $("loginForm").hidden = signup; $("signupForm").hidden = !signup;
@@ -499,7 +469,7 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
     else if(btn.dataset.l){ btn.innerHTML = btn.dataset.l; }
   }
 
-  /* ---------- Connexion ---------- */
+  /* Connexion */
   $("loginForm").addEventListener("submit", async e => {
     e.preventDefault();
     const id = $("lgId").value.trim(), code = $("lgCode").value.trim(), err = $("lgErr");
@@ -509,14 +479,13 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
     try{
       const res = await api({ id, code });
       if(!res.ok) return showErr(err, res.erreur === "bloque" ? "Votre accès est suspendu. Contactez Liv Services." : "Téléphone, identifiant ou code incorrect.");
-      partner = { id: res.id, nom: res.nom, statut: res.statut, quartier: res.quartier || "", code };
-      hist = res.historique || []; store.set("liv_partner", partner);
+      partner = fromRes(res, code); hist = res.historique || []; store.set("liv_partner", partner);
       $("lgCode").value = ""; resetOrder(); view("dash");
     }catch(_){ showErr(err, "Connexion impossible. Vérifiez votre internet et réessayez."); }
     finally{ busy($("lgBtn"), false); }
   });
 
-  /* ---------- Inscription ---------- */
+  /* Inscription */
   $("signupForm").addEventListener("submit", async e => {
     e.preventDefault();
     const err = $("suErr"); err.hidden = true;
@@ -536,20 +505,18 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
     try{
       const res = await api(null, d);
       if(!res.ok) return showErr(err, res.erreur === "existe" ? "Ce numéro est déjà inscrit. Connectez-vous avec l'onglet « Se connecter »." : "Inscription impossible. Vérifiez les informations et réessayez.");
-      partner = { id: res.id, nom: res.nom, statut: res.statut, quartier: res.quartier, code: d.code };
-      hist = []; store.set("liv_partner", partner); resetOrder(); view("dash");
+      partner = fromRes(res, d.code); hist = []; store.set("liv_partner", partner); resetOrder(); view("dash");
     }catch(_){ showErr(err, "Connexion impossible. Vérifiez votre internet et réessayez."); }
     finally{ busy($("suBtn"), false); }
   });
 
-  /* ---------- Statut ---------- */
+  /* Statut */
   async function refresh(){
     if(!partner) return;
     try{
       const res = await api({ id: partner.id, code: partner.code });
       if(!res.ok){ logout(); return; }
-      partner.nom = res.nom; partner.statut = res.statut; partner.quartier = res.quartier || partner.quartier;
-      hist = res.historique || hist; store.set("liv_partner", partner);
+      partner = fromRes(res, partner.code); hist = res.historique || hist; store.set("liv_partner", partner);
       if(!$("vDash").hidden || !$("vDone").hidden) renderPartner();
     }catch(_){}
   }
@@ -557,87 +524,84 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
   function logout(){ partner = null; hist = []; store.del("liv_partner"); view("guest"); }
   $("logoutBtn").onclick = logout;
 
-  /* ---------- Itinéraire ---------- */
-  let pickup = "";
-  function resetOrder(){ stops = [""]; pickup = partner ? partner.quartier || "" : ""; $("wNow").checked = true; $("laterBox").hidden = true; renderRoute(); }
+  /* Livraisons : quartier + heure pour chacune */
+  function slots(){
+    const out = [["asap","Dès que possible"]];
+    const now = new Date(); const t = new Date(now);
+    t.setMinutes(t.getMinutes() < 30 ? 30 : 60, 0, 0); t.setMinutes(t.getMinutes() + 30);
+    while(t.getHours() < 23 && t.getDate() === now.getDate()){ out.push([`${pad(t.getHours())}h${pad(t.getMinutes())}`, `${pad(t.getHours())}h${pad(t.getMinutes())}`]); t.setMinutes(t.getMinutes()+30); }
+    for(let h = 8; h <= 20; h += 2) out.push([`Demain ${pad(h)}h00`, `Demain ${pad(h)}h00`]);
+    return out;
+  }
+  const newStop = () => ({ q:"", h:"asap" });
+  const hLabel = h => h === "asap" ? "Dès que possible" : h;
+  function resetOrder(){ stops = [newStop()]; renderStops(); }
 
-  function renderRoute(focusIdx){
-    const ol = $("route"); ol.innerHTML = "";
-    const li0 = document.createElement("li"); li0.className = "stop";
-    li0.innerHTML = `<div class="node pick">${icon("i-store")}</div><div class="field"><label for="pickup">Point de retrait</label><input id="pickup" list="quartiers" placeholder="Votre quartier" autocomplete="off"></div><span></span>`;
-    ol.append(li0);
-    li0.querySelector("input").value = pickup;
-    li0.querySelector("input").oninput = e => { pickup = e.target.value; };
+  function renderStops(focusIdx){
+    const ol = $("stops"); ol.innerHTML = "";
+    const opts = slots();
     stops.forEach((s, i) => {
-      const li = document.createElement("li"); li.className = "stop" + (i === stops.length-1 ? " last" : "") + (i === focusIdx ? " new" : "");
-      li.innerHTML = `<div class="node drop">${i+1}</div><div class="field"><label for="stop${i}">Livraison ${i+1} · quartier</label><input id="stop${i}" list="quartiers" placeholder="Ex : Essos, Odza, Mvog-Mbi…" autocomplete="off"></div><button class="rm" type="button" aria-label="Retirer la livraison ${i+1}">${icon("i-x")}</button>`;
-      const inp = li.querySelector("input"); inp.value = s;
-      inp.oninput = e => { stops[i] = e.target.value; };
-      inp.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); addStop(); } };
+      const li = document.createElement("li"); li.className = "stop" + (i === focusIdx ? " new" : "");
+      li.innerHTML = `<span class="num" style="background:${COLORS[i % 4]}">${i+1}</span>
+        <div class="stop-body">
+          <div class="field"><label for="q${i}"><span class="pre">${i+1}. </span>Quartier de livraison</label><input id="q${i}" list="quartiers" placeholder="Ex : Essos" autocomplete="off"></div>
+          <div class="field"><label for="h${i}">Heure</label><select id="h${i}">${opts.map(([v,l]) => `<option value="${v}">${l}</option>`).join("")}</select></div>
+          <button class="rm" type="button" aria-label="Retirer la livraison ${i+1}">${icon("i-x")}</button>
+        </div>`;
+      const q = li.querySelector("input"), h = li.querySelector("select");
+      q.value = s.q; h.value = opts.some(o => o[0] === s.h) ? s.h : "asap"; s.h = h.value;
+      q.oninput = e => { s.q = e.target.value; };
+      q.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); addStop(); } };
+      h.onchange = e => { s.h = e.target.value; updateSummary(); };
       const rm = li.querySelector(".rm"); rm.disabled = stops.length === 1;
-      rm.onclick = () => { stops.splice(i,1); renderRoute(); };
+      rm.onclick = () => { stops.splice(i,1); renderStops(); };
       ol.append(li);
     });
-    if(focusIdx !== undefined) $("stop"+focusIdx)?.focus();
+    if(focusIdx !== undefined) $("q"+focusIdx)?.focus();
     updateSummary();
   }
-  function addStop(){
-    if(stops.length >= 20) return;
-    stops.push(""); renderRoute(stops.length-1);
-  }
+  function addStop(){ if(stops.length >= 20) return; const last = stops[stops.length-1]; stops.push({ q:"", h: last ? last.h : "asap" }); renderStops(stops.length-1); }
   $("addStop").onclick = addStop;
 
-  function heureTxt(){
-    if(!$("wLater").checked) return "Dès que possible";
-    const [hh,mm] = ($("time").value || "12:00").split(":");
-    return ($("day").value === "1" ? "Demain" : "Aujourd'hui") + ` à ${hh}h${mm}`;
-  }
   function updateSummary(){
     const n = stops.length, t = `${n} livraison${n>1?"s":""}`;
-    $("countPill").textContent = t; $("ctaCount").textContent = t; $("ctaWhen").textContent = heureTxt();
+    $("countPill").textContent = t; $("ctaCount").textContent = t;
+    const hs = [...new Set(stops.map(s => hLabel(s.h)))];
+    $("ctaWhen").textContent = hs.length === 1 ? hs[0] : "Heures différentes";
   }
-  document.querySelectorAll('input[name="when"]').forEach(r => r.addEventListener("change", () => { $("laterBox").hidden = !$("wLater").checked; updateSummary(); }));
-  $("day").onchange = updateSummary; $("time").oninput = updateSummary;
 
-  /* ---------- Commander ---------- */
+  /* Commander */
   $("orderBtn").addEventListener("click", async () => {
     const err = $("orderErr"); err.hidden = true;
     if(partner.statut !== "OUI"){ showErr(err, "Votre compte n'est pas encore validé. Vous pourrez commander dès que Liv Services aura validé votre accès."); err.scrollIntoView({behavior:"smooth",block:"center"}); return; }
-    const lieux = stops.map(s => s.trim());
-    const vide = lieux.findIndex(s => !s);
-    if(!pickup.trim()){ showErr(err, "Indiquez le point de retrait."); $("pickup").focus(); return; }
-    if(vide >= 0){ showErr(err, `Indiquez le quartier de la livraison ${vide+1}.`); $("stop"+vide).focus(); return; }
-    const now = new Date();
-    if($("wLater").checked){
-      const [hh,mm] = ($("time").value || "").split(":").map(Number);
-      const t = new Date(now); t.setDate(t.getDate() + Number($("day").value)); t.setHours(hh, mm||0, 0, 0);
-      if(isNaN(hh) || t < now){ showErr(err, "Cette heure est déjà passée. Choisissez une heure plus tard ou « Demain »."); return; }
-    }
-    const heure = heureTxt(), qty = lieux.length;
+    const vide = stops.findIndex(s => !s.q.trim());
+    if(vide >= 0){ showErr(err, `Indiquez le quartier de la livraison ${vide+1}.`); $("q"+vide).focus(); return; }
+    const now = new Date(), qty = stops.length;
+    const lignes = stops.map((s,i) => `${i+1}. ${s.q.trim()} – ${hLabel(s.h)}`);
     const ref = `LIV-${String(now.getFullYear()).slice(2)}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}-${String(partner.id).slice(-4)}`;
     const msg = [
       `*Demande de livreur – ${CONFIG.entreprise}*`, ``,
-      `Partenaire : ${partner.nom} (${partner.id})`,
-      `Point de retrait : ${pickup.trim()}`,
-      `Livraisons (${qty}) :`,
-      ...lieux.map((l,i) => `${i+1}. ${l}`),
-      `Heure souhaitée : ${heure}`,
+      `Partenaire : ${partner.nom}`,
+      partner.tel ? `Téléphone : ${fmtTel(partner.tel)}` : null,
+      partner.quartier ? `Adresse de retrait : ${partner.quartier}` : null,
+      ``, `*Livraisons (${qty})*`, ...lignes, ``,
       `Référence : ${ref}`,
       `Demandé le ${fmtDate(now)}`
-    ].join("\n");
+    ].filter(l => l !== null).join("\n");
     const url = `https://wa.me/${CONFIG.whatsappSupport}?text=${encodeURIComponent(msg)}`;
+    const heure = $("ctaWhen").textContent;
 
     const btn = $("orderBtn"); busy(btn, true, "Envoi…");
     try{
-      const res = await api(null, { action:"commande", id: partner.id, code: partner.code, ref, qty, heure, retrait: pickup.trim(), lieux });
+      const res = await api(null, { action:"commande", id: partner.id, code: partner.code, ref, qty, heure, lieux: stops.map(s => `${s.q.trim()} (${hLabel(s.h)})`) });
       if(res && res.ok === false && res.erreur === "non_valide"){ partner.statut = res.statut || "EN ATTENTE"; store.set("liv_partner", partner); renderPartner(); showErr(err, "Votre compte n'est pas encore validé."); return; }
       if(res && res.ok === false && res.erreur === "identifiants"){ logout(); return; }
     }catch(_){ /* réseau lent : on ouvre quand même WhatsApp */ }
     finally{ busy(btn, false); }
 
-    hist.unshift({ date: now.toISOString(), ref, qty, heure, lieux: lieux.map((l,i)=>`${i+1}. ${l}`).join(" | ") }); hist = hist.slice(0,8);
+    hist.unshift({ date: now.toISOString(), ref, qty, heure, lieux: stops.map(s => s.q.trim()).join(", ") }); hist = hist.slice(0,8);
     const rc = $("recap"); rc.innerHTML = "";
-    [["Point de retrait", pickup.trim()], ["Livraisons", `${qty} · ${lieux.join(", ")}`], ["Heure", heure], ["Référence", ref]].forEach(([k,v]) => {
+    [["Livraisons", String(qty)], ...stops.map((s,i) => [`${i+1}. ${s.q.trim()}`, hLabel(s.h)]), ["Référence", ref]].forEach(([k,v]) => {
       const d = document.createElement("div"); const a = document.createElement("span"); const b = document.createElement("span");
       a.textContent = k; b.textContent = v; d.append(a,b); rc.append(d);
     });
@@ -651,16 +615,15 @@ footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:cent
     const ul = $("histList"); ul.innerHTML = "";
     hist.forEach(h => {
       const li = document.createElement("li");
-      li.innerHTML = `<span class="hi">${icon("i-box")}</span><span class="t"><b></b><span></span></span><span class="n"></span>`;
-      li.querySelector("b").textContent = fmtDate(new Date(h.date)) + " · " + h.heure;
-      li.querySelector(".t span").textContent = (h.lieux || "").replace(/\d+\.\s/g,"").split(" | ").join(", ") || h.ref;
+      li.innerHTML = `<span class="t"><b></b><span></span></span><span class="n"></span>`;
+      li.querySelector("b").textContent = fmtDate(new Date(h.date));
+      li.querySelector(".t span").textContent = (h.lieux || "").replace(/\d+\.\s/g,"").replace(/\s*\([^)]*\)/g,"").split(" | ").join(", ") || h.ref;
       li.querySelector(".n").textContent = h.qty + " liv.";
       ul.append(li);
     });
     $("histEmpty").hidden = hist.length > 0;
   }
 
-  /* ---------- Démarrage ---------- */
   if(partner){ resetOrder(); view("dash"); refresh(); } else view("guest");
 })();
 </script>
