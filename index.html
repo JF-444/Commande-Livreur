@@ -559,11 +559,13 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
   function slots(){
     const out = [["asap","Dès que possible"]];
     const now = new Date(); const t = new Date(now);
-    t.setMinutes(t.getMinutes() < 30 ? 30 : 60, 0, 0); t.setMinutes(t.getMinutes() + 30);
-    while(t.getHours() < 23 && t.getDate() === now.getDate()){ out.push([`${pad(t.getHours())}h${pad(t.getMinutes())}`, `${pad(t.getHours())}h${pad(t.getMinutes())}`]); t.setMinutes(t.getMinutes()+30); }
-    for(let h = 8; h <= 20; h += 2) out.push([`Demain ${pad(h)}h00`, `Demain ${pad(h)}h00`]);
+    const q = d => `${pad(d.getHours())}h${pad(d.getMinutes())}`;
+    t.setSeconds(0, 0); t.setMinutes(Math.ceil((t.getMinutes() + 15) / 15) * 15);
+    while(t.getDate() === now.getDate() && t.getHours() * 60 + t.getMinutes() <= 21 * 60){ out.push([q(t), q(t)]); t.setMinutes(t.getMinutes() + 15); }
+    for(let m = 7 * 60; m <= 21 * 60; m += 15){ const v = `Demain ${pad(Math.floor(m / 60))}h${pad(m % 60)}`; out.push([v, v]); }
     return out;
   }
+  const optHtml = o => { let h = "", g = ""; for(const [v, l] of o){ const ng = v === "asap" ? "" : v.startsWith("Demain") ? "Demain" : "Aujourd'hui"; if(ng !== g){ if(g) h += "</optgroup>"; if(ng) h += `<optgroup label="${ng}">`; g = ng; } h += `<option value="${v}">${l}</option>`; } return h + (g ? "</optgroup>" : ""); };
   const newStop = () => ({ q:"", h:"asap" });
   const hLabel = h => h === "asap" ? "Dès que possible" : h;
   function resetOrder(){ stops = [newStop()]; renderStops(); }
@@ -576,7 +578,7 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
       li.innerHTML = `<span class="num" style="background:${COLORS[i % 4]}">${i+1}</span>
         <div class="stop-body">
           <div class="field"><label for="q${i}"><span class="pre">${i+1}. </span>Quartier de livraison</label><input id="q${i}" list="quartiers" placeholder="Ex : Essos" autocomplete="off"></div>
-          <div class="field"><label for="h${i}">Heure</label><select id="h${i}">${opts.map(([v,l]) => `<option value="${v}">${l}</option>`).join("")}</select></div>
+          <div class="field"><label for="h${i}">Heure</label><select id="h${i}">${optHtml(opts)}</select></div>
           <button class="rm" type="button" aria-label="Retirer la livraison ${i+1}">${icon("i-x")}</button>
         </div>`;
       const q = li.querySelector("input"), h = li.querySelector("select");
