@@ -316,7 +316,7 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
         <p>Bonjour,</p><h1 id="partnerName"></h1>
         <div class="meta"><span id="metaAddr"><svg class="i"><use href="#i-pin"/></svg><b></b></span><span id="metaTel"><svg class="i"><use href="#i-phone"/></svg><b></b></span></div>
       </div>
-      <div class="hello-r"><span class="live"><span class="pulse"></span><span><b>2 livreurs</b> à proximité<span id="liveQ"></span></span></span><span class="status" id="statusPill"></span></div>
+      <div class="hello-r"><span class="live"><span class="pulse"></span><span><b id="liveN">2 livreurs</b> à proximité<span id="liveQ"></span></span></span><span class="status" id="statusPill"></span></div>
     </div>
   </section>
 </div>
@@ -407,6 +407,8 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
   const msgs = ["Votre livreur en moins de 20 min","Commande en 30 secondes","Partout à Yaoundé","Plusieurs livraisons en une course","Confirmation sur WhatsApp"];
   const one = msgs.map((m,i) => `<span><i style="background:${["#F28A1A","#1E9E5A","#0F3D2E","#2E7A5C","#F28A1A"][i]}"></i>${m}</span>`).join("");
   $("ticker").innerHTML = one + one;
+  function liveN(){ const q = (partner && partner.quartier) || ""; let h = Math.floor(Date.now() / 900000); for(const c of q) h = (h * 31 + c.charCodeAt(0)) % 1000003; const n = 1 + h % 4; $("liveN").textContent = n + (n > 1 ? " livreurs" : " livreur"); }
+  setInterval(() => { if(partner) liveN(); }, 60000);
 
   const Q = ["Ahala","Anguissa","Awae","Bastos","Biteng","Biyem-Assi","Briqueterie","Centre-ville","Cité Verte","Damas","Efoulan","Ekié","Ekoumdoum","Ekounou","Elig-Edzoa","Elig-Effa","Elig-Essono","Emana","Essos","Etetak","Etoa-Meki","Etoudi","Etoug-Ebe","Febe","Golf","Hippodrome","Jouvence","Kondengui","Madagascar","Mballa II","Melen","Mendong","Messa","Messassi","Mimboman","Mokolo","Mvan","Mvog-Ada","Mvog-Atangana Mballa","Mvog-Betsi","Mvog-Mbi","Mvolyé","Ngoa-Ekellé","Ngousso","Nkoabang","Nkolbisson","Nkoldongo","Nkolmesseng","Nkomo","Nlongkak","Nsam","Nsimeyong","Nyom","Obili","Odza","Olembe","Omnisport","Oyom-Abang","Santa Barbara","Simbock","Tsinga"];
   $("quartiers").innerHTML = Q.map(q => `<option value="${q}">`).join("");
@@ -437,7 +439,7 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
   }
 
   function renderPartner(){
-    $("partnerName").textContent = partner.nom; $("liveQ").textContent = partner.quartier ? " de " + partner.quartier : "";
+    $("partnerName").textContent = partner.nom; $("liveQ").textContent = partner.quartier ? " de " + partner.quartier : ""; liveN();
     $("metaAddr").hidden = !partner.quartier; $("metaAddr").querySelector("b").textContent = partner.quartier || "";
     $("metaTel").hidden = !partner.tel; $("metaTel").querySelector("b").textContent = fmtTel(partner.tel);
     const ok = partner.statut === "OUI";
