@@ -4,136 +4,421 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Liv Services Partenaires</title>
+<meta name="description" content="Commandez un livreur Liv Services en quelques secondes, partout à Yaoundé.">
+<meta name="theme-color" content="#0a3a27">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap">
 <script>
 /* =====================================================================
-   CONFIGURATION — à remplir une seule fois
+   CONFIGURATION
    ===================================================================== */
 const CONFIG = {
   entreprise: "Liv Services",
   // Numéro WhatsApp du support (format international, sans + ni espaces)
   whatsappSupport: "237676178299",
-  // Adresse de votre script Google Sheets (se termine par /exec) — voir le guide
+  // Adresse du script Google Sheets (se termine par /exec)
   scriptUrl: "https://script.google.com/macros/s/AKfycbzW0e57AFhYo0gSuP0W60sDsGp9KSyg0xxbU5BfpVIr28TzPaoDiY1b1q_56opDew_tCQ/exec",
 };
 </script>
 <style>
+/* Liv : vert forêt profond + jaune soleil. Hero vert plein, contenu sur fond clair, itinéraire en timeline. */
 :root{
-  --bg:#f3f5f1; --surface:#ffffff; --ink:#15231c; --muted:#5d6b63; --line:#dde3dc;
-  --brand:#0f6b45; --brand-ink:#ffffff; --sun:#f5b324; --sun-ink:#2b1d00; --danger:#b3261e;
-  --display:"Sora",ui-sans-serif,system-ui,sans-serif; --body:"DM Sans",ui-sans-serif,system-ui,sans-serif;
+  --g950:#06261a; --g900:#0a3a27; --g800:#0e4d33; --g600:#13774c; --g500:#1a9a61; --g100:#dff1e6; --g50:#eff8f2;
+  --sun:#ffc21a; --sun-deep:#f2a900; --sun-ink:#2a1c00;
+  --bg:#f3f6f2; --surface:#ffffff; --ink:#0c1d15; --muted:#5a6b62; --line:#dde5df;
+  --danger:#c62828;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  --r:18px; --shadow:0 1px 2px rgba(6,38,26,.06),0 12px 32px -12px rgba(6,38,26,.18);
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root{
-  --bg:#0e1612; --surface:#16211b; --ink:#e7efe9; --muted:#9db0a5; --line:#27352d;
-  --brand:#2fae76; --brand-ink:#04140c; --sun:#f5b324; --sun-ink:#2b1d00; --danger:#ff8a80; color-scheme:dark}}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);min-height:100vh;
-  padding:max(20px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
-.wrap{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.logo{display:flex;align-items:center;gap:10px;font:700 18px/1 var(--display)}
-.logo i{width:34px;height:34px;border-radius:10px;background:var(--brand);display:grid;place-items:center;color:var(--brand-ink);font-style:normal;font-size:17px}
-.logo small{display:block;font:500 12px/1.3 var(--body);color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-top:3px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:16px}
-h1{font:700 24px/1.2 var(--display);margin:0;text-wrap:balance}
-h2{font:600 16px/1.3 var(--display);margin:0}
-p{margin:0}.muted{color:var(--muted);font-size:14px}
-label{font-weight:700;font-size:14px;display:block;margin-bottom:6px}
-input,select{width:100%;font:inherit;font-size:17px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px}
-input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 45%,transparent);outline-offset:1px;border-color:var(--brand)}
-.btn{appearance:none;border:0;border-radius:14px;padding:16px;font:700 17px/1 var(--body);cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
-.btn-main{background:var(--brand);color:var(--brand-ink)}
-.btn-sun{background:var(--sun);color:var(--sun-ink);font-size:18px;padding:19px}
-.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);padding:12px;font-size:15px}
-.link{background:none;border:0;color:var(--muted);font:500 14px var(--body);text-decoration:underline;cursor:pointer;padding:6px}
-.err{color:var(--danger);font-size:14px;font-weight:500}
-.stepper{display:grid;grid-template-columns:64px 1fr 64px;gap:10px;align-items:center}
-.stepper button{height:64px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:700 28px var(--body);cursor:pointer}
-.stepper output{text-align:center;font:700 44px/1 var(--display);font-variant-numeric:tabular-nums}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);-webkit-font-smoothing:antialiased;min-height:100vh}
+button,input,select{font:inherit;color:inherit}
+svg.i{width:1.25em;height:1.25em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gut{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.max{max-width:1100px;margin:0 auto}
+[hidden]{display:none!important}
+
+/* ---------- Bande défilante ---------- */
+.ticker{background:var(--sun);color:var(--sun-ink);overflow:hidden;white-space:nowrap;padding-top:env(safe-area-inset-top)}
+.ticker-track{display:inline-flex;animation:tick 38s linear infinite;padding-block:9px}
+.ticker span{display:inline-flex;align-items:center;gap:12px;font:800 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding-right:28px}
+.ticker span svg{width:26px;height:16px;fill:var(--sun-ink)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- En-tête ---------- */
+.top{background:var(--g900);color:#fff}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:16px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit}
+.brand-mark{width:40px;height:40px;border-radius:12px;background:var(--sun);display:grid;place-items:center}
+.brand-mark svg{width:26px;height:26px}
+.brand b{display:block;font:800 19px/1 var(--display);letter-spacing:-.01em}
+.brand small{display:block;font:700 11px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:#a9d7bd;margin-top:4px}
+.who{display:flex;align-items:center;gap:8px}
+.chip-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;cursor:pointer}
+.chip-btn:hover{background:rgba(255,255,255,.12)}
+
+/* ---------- Hero (visiteur) ---------- */
+.hero{position:relative;overflow:hidden;padding-block:28px 64px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,194,26,.14);color:var(--sun);border:1px solid rgba(255,194,26,.35);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 0 rgba(255,194,26,.7);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(255,194,26,0)}100%{box-shadow:0 0 0 0 rgba(255,194,26,0)}}
+.hero h1{font:800 clamp(38px,6vw,64px)/1 var(--display);letter-spacing:-.03em;margin:18px 0 16px;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--sun)}
+.hero p.lead{color:#cfe6d9;font-size:18px;max-width:30em;margin:0}
+.perks{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding:0;list-style:none}
+.perks li{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14px}
+.perks svg{color:var(--sun)}
+.road{position:relative;height:84px;margin-top:34px;max-width:520px}
+.road::before{content:"";position:absolute;left:0;right:0;bottom:16px;border-bottom:3px dashed rgba(255,255,255,.28)}
+.road .pin{position:absolute;bottom:14px;width:28px;height:36px;color:var(--sun)}
+.road .pin.a{left:0;color:#7fd3a6}.road .pin.b{right:0}
+.road .moto{position:absolute;bottom:18px;left:0;width:76px;height:48px;animation:ride 6s cubic-bezier(.55,.05,.35,1) infinite}
+@keyframes ride{0%{transform:translateX(10px)}48%,52%{transform:translateX(min(440px,calc(100vw - 140px)))}100%{transform:translateX(10px) scaleX(1)}}
+.moto .wheel{transform-box:fill-box;transform-origin:center;animation:spin .5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Cartes ---------- */
+.card{background:var(--surface);color:var(--ink);border-radius:24px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.auth{padding:8px 8px 24px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--g50);border-radius:16px;padding:5px;gap:5px}
+.tabs button{border:0;background:transparent;border-radius:12px;padding:12px;font-weight:800;cursor:pointer;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:#fff;color:var(--g900);box-shadow:0 1px 3px rgba(6,38,26,.12)}
+.pane{padding:22px 16px 0;display:flex;flex-direction:column;gap:14px}
+.pane h2{font:800 24px/1.15 var(--display);letter-spacing:-.02em;margin:0}
+.pane .sub{color:var(--muted);font-size:14px;margin:-6px 0 2px}
+.field label{display:block;font-weight:800;font-size:13px;margin-bottom:6px;color:var(--g900)}
+.field input,.field select{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;font-size:16px;transition:border-color .15s,background .15s}
+.field input:focus,.field select:focus{outline:none;border-color:var(--g500);background:#fff;box-shadow:0 0 0 4px rgba(26,154,97,.14)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.check{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--g600)}
+.prefix{display:flex;align-items:stretch}
+.prefix span{display:grid;place-items:center;padding:0 12px;background:var(--g50);border:1.5px solid var(--line);border-right:0;border-radius:14px 0 0 14px;font-weight:800;font-size:14px;color:var(--g800)}
+.prefix input{border-radius:0 14px 14px 0!important}
+.err{display:flex;gap:8px;align-items:flex-start;color:var(--danger);font-weight:600;font-size:14px;margin:0}
+.btn{appearance:none;border:0;border-radius:16px;padding:16px 20px;font-weight:800;font-size:16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;transition:transform .12s,box-shadow .2s,background .2s}
+.btn:active{transform:scale(.98)}
+.btn-green{background:var(--g800);color:#fff}
+.btn-green:hover{background:var(--g900)}
+.btn-sun{background:var(--sun);color:var(--sun-ink);box-shadow:0 10px 24px -10px rgba(242,169,0,.8)}
+.btn-sun:hover{background:#ffcb3d}
+.btn-soft{background:var(--g50);color:var(--g800)}
+.btn-line{background:transparent;color:var(--g800);border:1.5px dashed #b7cfc1;width:100%}
+.btn-line:hover{border-color:var(--g500);background:var(--g50)}
+.btn[disabled]{cursor:not-allowed}
+.btn-block{width:100%}
+.spin{width:18px;height:18px;border:2.5px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+
+/* ---------- Comment ça marche ---------- */
+.how{padding-block:56px 40px}
+.how h2{font:800 30px/1.1 var(--display);letter-spacing:-.02em;margin:0 0 24px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;counter-increment:s;position:relative}
+.steps li::before{content:counter(s);position:absolute;top:18px;right:20px;font:800 44px/1 var(--display);color:var(--g100)}
+.steps .ic{width:46px;height:46px;border-radius:14px;background:var(--g900);color:var(--sun);display:grid;place-items:center;margin-bottom:14px}
+.steps h3{font:800 18px/1.2 var(--display);margin:0 0 6px}
+.steps p{margin:0;color:var(--muted);font-size:15px}
+
+/* ---------- Tableau de bord ---------- */
+.dash-hero{padding-block:8px 70px}
+.hello{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.hello p{margin:0;color:#a9d7bd;font-weight:700}
+.hello h1{font:800 clamp(28px,4.5vw,42px)/1.05 var(--display);letter-spacing:-.025em;margin:4px 0 0;text-wrap:balance}
+.status{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-weight:800;font-size:13px}
+.status.ok{background:rgba(127,211,166,.16);color:#9ff0c3;border:1px solid rgba(127,211,166,.35)}
+.status.wait{background:rgba(255,194,26,.15);color:var(--sun);border:1px solid rgba(255,194,26,.4)}
+.dash{margin-top:-46px;display:grid;grid-template-columns:1.25fr .75fr;gap:20px;align-items:start;padding-bottom:120px}
+.dash > *{min-width:0}
+.pending{display:flex;gap:14px;align-items:flex-start;background:#fff8e1;border:1px solid #ffe08a;border-radius:var(--r);padding:16px 18px;margin-bottom:16px}
+.pending .ic{width:42px;height:42px;border-radius:12px;background:var(--sun);color:var(--sun-ink);display:grid;place-items:center;flex:none}
+.pending h3{margin:0 0 2px;font:800 17px/1.25 var(--display)}
+.pending p{margin:0 0 10px;font-size:14px;color:#5c4a12}
+.pending .btn{padding:9px 14px;font-size:14px;border-radius:12px}
+.order{padding:24px}
+.order-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.order-h h2{margin:0;font:800 24px/1.1 var(--display);letter-spacing:-.02em}
+.count{font:800 13px/1 var(--body);background:var(--g900);color:var(--sun);padding:8px 12px;border-radius:999px;white-space:nowrap}
+
+/* timeline itinéraire */
+.route{list-style:none;margin:0;padding:0;position:relative}
+.stop{position:relative;display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:end;padding-bottom:16px}
+.stop.new{animation:pop .28s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(-6px)}}
+.stop::after{content:"";position:absolute;left:21px;top:46px;bottom:-2px;border-left:2.5px dashed #c4d6cb}
+.stop.last::after{display:none}
+.node{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;align-self:end}
+.node.pick{background:var(--g900);color:var(--sun)}
+.node.drop{background:var(--sun);color:var(--sun-ink);font:800 16px/1 var(--display)}
+.stop .field{min-width:0}
+.rm{width:44px;height:48px;border:0;border-radius:14px;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center}
+.rm:hover{background:#fdecec;color:var(--danger)}
+.rm[disabled]{visibility:hidden}
+.add-row{display:grid;grid-template-columns:44px 1fr;gap:12px;margin-bottom:22px}
+.when-t{font-weight:800;font-size:13px;color:var(--g900);margin:0 0 8px}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .seg input{position:absolute;opacity:0;pointer-events:none}
-.seg label{margin:0;text-align:center;padding:13px;border-radius:12px;border:1.5px solid var(--line);cursor:pointer;font-weight:500}
-.seg input:checked+label{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 12%,transparent);font-weight:700}
-.seg input:focus-visible+label{outline:3px solid color-mix(in srgb,var(--brand) 45%,transparent)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.hist li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.seg label{display:flex;align-items:center;justify-content:center;gap:7px;padding:13px 8px;border-radius:14px;border:1.5px solid var(--line);cursor:pointer;font-weight:700;font-size:14.5px;white-space:nowrap;background:var(--bg)}
+.seg input:checked+label{border-color:var(--g600);background:var(--g50);color:var(--g900);box-shadow:inset 0 0 0 1px var(--g600)}
+.seg input:focus-visible+label{outline:3px solid rgba(26,154,97,.35)}
+.later{margin-top:12px}
+
+/* barre d'action collante */
+.cta{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:max(12px,env(safe-area-inset-bottom))}
+.cta-in{display:flex;align-items:center;gap:16px;padding-top:12px}
+.cta-sum{flex:1;min-width:0}
+.cta-sum b{display:block;font:800 18px/1.1 var(--display)}
+.cta-sum span{display:block;color:var(--muted);font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cta .btn{padding:16px 22px;font-size:16px;white-space:nowrap}
+.cta .btn.locked{background:#e7ece9;color:#7d8c84;box-shadow:none}
+
+/* historique */
+.side{display:flex;flex-direction:column;gap:20px}
+.hist{padding:22px}
+.hist h2{margin:0 0 14px;font:800 19px/1.2 var(--display)}
+.hist ul{list-style:none;margin:0;padding:0}
+.hist li{display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
 .hist li:first-child{border-top:0}
-.hist b{font-variant-numeric:tabular-nums}
-.ok{width:64px;height:64px;border-radius:50%;background:color-mix(in srgb,var(--brand) 15%,transparent);color:var(--brand);display:grid;place-items:center;font-size:34px;margin:0 auto}
-.center{text-align:center}
-pre{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;white-space:pre-wrap;word-break:break-all;font-size:13px;margin:0}
-.recap{background:var(--bg);border-radius:12px;padding:14px;font-size:14px;white-space:pre-line}
-[hidden]{display:none!important}
+.hist .hi{width:38px;height:38px;border-radius:12px;background:var(--g50);color:var(--g600);display:grid;place-items:center}
+.hist .t{min-width:0}
+.hist .t b{display:block;font-size:14px}
+.hist .t span{display:block;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist .n{font:800 15px/1 var(--display);font-variant-numeric:tabular-nums;color:var(--g800)}
+.empty{color:var(--muted);font-size:14px;margin:0}
+.promise{background:var(--g900);color:#fff;border-radius:var(--r);padding:22px;position:relative;overflow:hidden}
+.promise b{display:block;font:800 40px/1 var(--display);color:var(--sun);letter-spacing:-.02em}
+.promise p{margin:6px 0 0;color:#cfe6d9;font-size:14px;max-width:16em}
+.promise svg.big{position:absolute;right:-6px;bottom:6px;width:120px;height:78px;opacity:.95}
+
+/* confirmation */
+.done{max-width:520px;margin:-46px auto 0;padding:32px 24px;text-align:center}
+.done .moto-wrap{height:80px;position:relative;margin:0 auto 6px;width:200px;overflow:hidden}
+.done .moto-wrap svg{position:absolute;left:0;bottom:4px;width:90px;height:56px;animation:zoom 2.4s ease-in-out infinite}
+@keyframes zoom{0%{transform:translateX(-90px)}50%{transform:translateX(55px)}100%{transform:translateX(210px)}}
+.done h2{font:800 28px/1.1 var(--display);letter-spacing:-.02em;margin:0 0 8px}
+.done p{color:var(--muted);margin:0 0 18px}
+.recap{text-align:left;background:var(--bg);border-radius:16px;padding:16px 18px;margin-bottom:18px;font-size:14px}
+.recap div{display:flex;justify-content:space-between;gap:16px;padding:5px 0}
+.recap div span:first-child{color:var(--muted)}
+.recap div span:last-child{font-weight:700;text-align:right}
+.done .btns{display:flex;flex-direction:column;gap:10px}
+
+footer{color:var(--muted);font-size:13px;padding-block:24px 40px;text-align:center}
+:focus-visible{outline:3px solid rgba(26,154,97,.45);outline-offset:2px}
+
+@media (max-width:860px){
+  .hero-grid,.dash{grid-template-columns:1fr}
+  .hero{padding-block:20px 40px}
+  .steps{grid-template-columns:1fr}
+  .side{flex-direction:column-reverse}
+}
+@media (max-width:480px){
+  .row2{grid-template-columns:1fr}
+  .order{padding:18px 14px}
+  .cta-in{gap:10px}
+  .cta .btn{padding:15px 16px}
+  .cta .btn .lbl-long{display:none}
+  .road{display:none}
+}
+@media (min-width:481px){.cta .btn .lbl-short{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="logo"><i>L</i><div><span id="brandName">Liv Services</span><small>Espace partenaires</small></div></div>
-    <button class="link" id="logoutBtn" hidden>Déconnexion</button>
-  </header>
 
-  <!-- CONNEXION -->
-  <section class="card" id="vLogin" hidden>
-    <h1>Commander un livreur</h1>
-    <p class="muted">Connectez-vous avec l'identifiant et le code que Liv Services vous a remis.</p>
-    <form id="loginForm" novalidate style="display:flex;flex-direction:column;gap:14px">
-      <div><label for="lgId">Identifiant partenaire</label><input id="lgId" autocomplete="username" autocapitalize="characters" placeholder="ex : RESTO-MBALLA"></div>
-      <div><label for="lgCode">Code d'accès</label><input id="lgCode" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••••"></div>
-      <p class="err" id="lgErr" hidden></p>
-      <button class="btn btn-main" type="submit">Se connecter</button>
-    </form>
-  </section>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="moto" viewBox="0 0 76 48">
+    <rect x="3" y="8" width="22" height="18" rx="3" fill="#ffc21a" stroke="#06261a" stroke-width="2.5"/>
+    <path d="M8 14h12" stroke="#06261a" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M14 38h26l8-14h8" fill="none" stroke="#06261a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M22 30h22l4-6" fill="#1a9a61" stroke="#06261a" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M52 24l4-12h6" fill="none" stroke="#06261a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="wheel"><circle cx="14" cy="38" r="8" fill="#fff" stroke="#06261a" stroke-width="3"/><path d="M14 31v14M7 38h14" stroke="#06261a" stroke-width="1.5"/></g>
+    <g class="wheel"><circle cx="60" cy="38" r="8" fill="#fff" stroke="#06261a" stroke-width="3"/><path d="M60 31v14M53 38h14" stroke="#06261a" stroke-width="1.5"/></g>
+  </symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 10v10h16V10"/><path d="M3 10l2-6h14l2 6"/><path d="M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.6-4.5L4 8"/><path d="M4 3v5h5"/><path d="M4 13a8 8 0 0 0 14.6 4.5L20 16"/><path d="M20 21v-5h-5"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4"/><path d="M10 16l-4-4 4-4M6 12h10"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></symbol>
+  <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3c0 5 10 5 10 9s-10 4-10 9M17 3c0 5-10 5-10 9"/></symbol>
+</svg>
 
-  <!-- COMMANDE -->
-  <section class="card" id="vOrder" hidden>
-    <div><p class="muted">Bonjour,</p><h1 id="partnerName"></h1></div>
-    <div>
-      <label>Nombre de livraisons</label>
-      <div class="stepper">
-        <button type="button" id="minus" aria-label="Retirer une livraison">−</button>
-        <output id="qty" aria-live="polite">1</output>
-        <button type="button" id="plus" aria-label="Ajouter une livraison">+</button>
+<div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+<div class="top">
+  <div class="gut"><div class="max bar">
+    <a class="brand" href="#">
+      <span class="brand-mark"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M7 5v14h11" fill="none" stroke="#06261a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8h7M16 12.5h5" stroke="#06261a" stroke-width="2.6" stroke-linecap="round"/></svg></span>
+      <span><b>Liv Services</b><small>Espace partenaires</small></span>
+    </a>
+    <div class="who">
+      <button class="chip-btn" id="logoutBtn" hidden><svg class="i"><use href="#i-out"/></svg><span>Déconnexion</span></button>
+    </div>
+  </div></div>
+
+  <!-- HERO VISITEUR -->
+  <section class="hero gut" id="vGuest" hidden>
+    <div class="max hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot-live"></span>Livreurs disponibles à Yaoundé</span>
+        <h1>Votre livreur en <em>moins de 20&nbsp;min.</em></h1>
+        <p class="lead">Indiquez vos quartiers de livraison, appuyez sur Commander : un livreur Liv arrive chez vous.</p>
+        <ul class="perks">
+          <li><svg class="i"><use href="#i-bolt"/></svg>Commande en 30 secondes</li>
+          <li><svg class="i"><use href="#i-map"/></svg>Partout à Yaoundé</li>
+          <li><svg class="i"><use href="#i-chat"/></svg>Confirmé sur WhatsApp</li>
+        </ul>
+        <div class="road" aria-hidden="true">
+          <svg class="pin a i" style="stroke-width:2.2"><use href="#i-store"/></svg>
+          <svg class="moto"><use href="#moto"/></svg>
+          <svg class="pin b i" style="stroke-width:2.2"><use href="#i-pin"/></svg>
+        </div>
+      </div>
+
+      <div class="card auth">
+        <div class="tabs" role="tablist">
+          <button role="tab" id="tLogin" aria-selected="true">Se connecter</button>
+          <button role="tab" id="tSignup" aria-selected="false">Devenir partenaire</button>
+        </div>
+
+        <form class="pane" id="loginForm" novalidate>
+          <div><h2>Bon retour</h2></div>
+          <p class="sub">Connectez-vous avec votre numéro de téléphone (ou identifiant) et votre code.</p>
+          <div class="field"><label for="lgId">Téléphone ou identifiant</label><input id="lgId" autocomplete="username" placeholder="6XX XX XX XX"></div>
+          <div class="field"><label for="lgCode">Code d'accès</label><input id="lgCode" type="password" inputmode="numeric" maxlength="12" autocomplete="current-password" placeholder="6 chiffres"></div>
+          <p class="err" id="lgErr" hidden></p>
+          <button class="btn btn-green btn-block" type="submit" id="lgBtn">Se connecter</button>
+        </form>
+
+        <form class="pane" id="signupForm" novalidate hidden>
+          <div><h2>Devenez partenaire Liv</h2></div>
+          <p class="sub">Inscription gratuite. Vous pourrez commander dès que notre équipe aura validé votre compte.</p>
+          <div class="field"><label for="suNom">Nom du commerce</label><input id="suNom" autocomplete="organization" placeholder="Ex : Restaurant Le Mballa"></div>
+          <div class="row2">
+            <div class="field"><label for="suType">Type d'activité</label>
+              <select id="suType"><option value="">Choisir…</option><option>Restaurant</option><option>Boutique</option><option>Supermarché</option><option>Pharmacie</option><option>E-commerce</option><option>Pâtisserie / Boulangerie</option><option>Autre</option></select></div>
+            <div class="field"><label for="suQuartier">Quartier du commerce</label><input id="suQuartier" list="quartiers" placeholder="Ex : Bastos"></div>
+          </div>
+          <div class="field"><label for="suResp">Nom du responsable</label><input id="suResp" autocomplete="name" placeholder="Prénom et nom"></div>
+          <div class="field"><label for="suTel">Numéro de téléphone</label><div class="prefix"><span>+237</span><input id="suTel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="6XX XX XX XX"></div></div>
+          <label class="check"><input type="checkbox" id="suSame" checked> Ce numéro est aussi mon WhatsApp</label>
+          <div class="field" id="suWaBox" hidden><label for="suWa">Numéro WhatsApp</label><div class="prefix"><span>+237</span><input id="suWa" type="tel" inputmode="tel" placeholder="6XX XX XX XX"></div></div>
+          <div class="row2">
+            <div class="field"><label for="suCode">Choisissez un code</label><input id="suCode" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="6 chiffres"></div>
+            <div class="field"><label for="suCode2">Confirmez le code</label><input id="suCode2" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="6 chiffres"></div>
+          </div>
+          <p class="err" id="suErr" hidden></p>
+          <button class="btn btn-sun btn-block" type="submit" id="suBtn">Envoyer ma demande</button>
+        </form>
       </div>
     </div>
-    <div>
-      <label>Heure souhaitée</label>
-      <div class="seg">
-        <input type="radio" name="when" id="wNow" value="now" checked><label for="wNow">Dès que possible</label>
-        <input type="radio" name="when" id="wLater" value="later"><label for="wLater">Programmer</label>
-      </div>
+  </section>
+
+  <!-- HERO CONNECTÉ -->
+  <section class="dash-hero gut" id="vDashHero" hidden>
+    <div class="max hello">
+      <div><p>Bonjour,</p><h1 id="partnerName"></h1></div>
+      <span class="status" id="statusPill"></span>
     </div>
-    <div class="row2" id="laterBox" hidden>
-      <div><label for="day">Jour</label><select id="day"><option value="0">Aujourd'hui</option><option value="1">Demain</option></select></div>
-      <div><label for="time">Heure</label><input type="time" id="time" value="12:00"></div>
-    </div>
-    <p class="err" id="orderErr" hidden></p>
-    <button class="btn btn-sun" id="orderBtn">Commander un livreur</button>
   </section>
-
-  <!-- CONFIRMATION -->
-  <section class="card center" id="vDone" hidden>
-    <div class="ok">✓</div>
-    <h1>Plus qu'une étape</h1>
-    <p class="muted">WhatsApp s'est ouvert avec votre demande déjà écrite. <b>Appuyez sur Envoyer</b> dans WhatsApp pour que le support reçoive la commande.</p>
-    <div class="recap" id="recap"></div>
-    <a class="btn btn-main" id="waAgain" target="_blank" rel="noopener">Rouvrir WhatsApp</a>
-    <button class="btn btn-ghost" id="newOrder">Nouvelle commande</button>
-  </section>
-
-  <!-- HISTORIQUE -->
-  <section class="card" id="vHist" hidden>
-    <h2>Mes dernières demandes</h2>
-    <ul class="hist" id="histList"></ul>
-    <p class="muted" id="histEmpty">Vos demandes apparaîtront ici.</p>
-  </section>
-
 </div>
+
+<!-- COMMENT ÇA MARCHE (visiteur) -->
+<section class="how gut" id="vHow" hidden>
+  <div class="max">
+    <h2>Comment ça marche</h2>
+    <ol class="steps">
+      <li><div class="ic"><svg class="i"><use href="#i-pin"/></svg></div><h3>Ajoutez vos lieux</h3><p>Un quartier par livraison : Essos, Bastos, Odza… autant que nécessaire.</p></li>
+      <li><div class="ic"><svg class="i"><use href="#i-bolt"/></svg></div><h3>Commandez</h3><p>Votre demande part directement au support Liv sur WhatsApp, déjà rédigée.</p></li>
+      <li><div class="ic"><svg class="i"><use href="#i-box"/></svg></div><h3>Le livreur arrive</h3><p>Un livreur Liv passe récupérer vos colis en moins de 20 minutes.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- TABLEAU DE BORD -->
+<main class="gut" id="vDash" hidden>
+  <div class="max dash">
+    <div>
+      <div class="pending" id="pendingBox" hidden>
+        <div class="ic"><svg class="i"><use href="#i-hourglass"/></svg></div>
+        <div>
+          <h3>Votre compte est en cours de validation</h3>
+          <p>Vous pouvez déjà préparer vos courses. Le bouton Commander s'activera dès que Liv Services aura validé votre accès.</p>
+          <button class="btn btn-soft" id="refreshBtn" type="button"><svg class="i"><use href="#i-refresh"/></svg>Vérifier mon statut</button>
+        </div>
+      </div>
+
+      <section class="card order" aria-labelledby="orderTitle">
+        <div class="order-h"><h2 id="orderTitle">Nouvelle course</h2><span class="count" id="countPill">1 livraison</span></div>
+        <ol class="route" id="route"></ol>
+        <div class="add-row"><span></span><button class="btn btn-line" type="button" id="addStop"><svg class="i"><use href="#i-plus"/></svg>Ajouter une livraison</button></div>
+        <p class="when-t">Heure souhaitée</p>
+        <div class="seg">
+          <input type="radio" name="when" id="wNow" value="now" checked><label for="wNow"><svg class="i"><use href="#i-bolt"/></svg>Dès que possible</label>
+          <input type="radio" name="when" id="wLater" value="later"><label for="wLater"><svg class="i"><use href="#i-clock"/></svg>Programmer</label>
+        </div>
+        <div class="row2 later" id="laterBox" hidden>
+          <div class="field"><label for="day">Jour</label><select id="day"><option value="0">Aujourd'hui</option><option value="1">Demain</option></select></div>
+          <div class="field"><label for="time">Heure</label><input type="time" id="time" value="12:00"></div>
+        </div>
+        <p class="err" id="orderErr" hidden style="margin-top:14px"></p>
+      </section>
+    </div>
+
+    <aside class="side">
+      <div class="promise">
+        <b>&lt; 20 min</b>
+        <p>Un livreur Liv à votre point de retrait, partout à Yaoundé.</p>
+        <svg class="big" aria-hidden="true"><use href="#moto"/></svg>
+      </div>
+      <section class="card hist">
+        <h2>Mes dernières courses</h2>
+        <ul id="histList"></ul>
+        <p class="empty" id="histEmpty">Vos courses apparaîtront ici.</p>
+      </section>
+    </aside>
+  </div>
+
+  <div class="cta gut" id="ctaBar">
+    <div class="max cta-in">
+      <div class="cta-sum"><b id="ctaCount">1 livraison</b><span id="ctaWhen">Dès que possible</span></div>
+      <button class="btn btn-sun" id="orderBtn" type="button"><svg class="i"><use href="#i-bolt"/></svg><span class="lbl-long">Commander un livreur</span><span class="lbl-short">Commander</span></button>
+    </div>
+  </div>
+</main>
+
+<!-- CONFIRMATION -->
+<main class="gut" id="vDone" hidden>
+  <section class="card done">
+    <div class="moto-wrap" aria-hidden="true"><svg><use href="#moto"/></svg></div>
+    <h2>Plus qu'une étape</h2>
+    <p>WhatsApp s'est ouvert avec votre demande déjà écrite. <b>Appuyez sur Envoyer</b> pour que le support Liv reçoive la course.</p>
+    <div class="recap" id="recap"></div>
+    <div class="btns">
+      <a class="btn btn-green" id="waAgain" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>Rouvrir WhatsApp</a>
+      <button class="btn btn-soft" id="newOrder" type="button"><svg class="i"><use href="#i-plus"/></svg>Nouvelle course</button>
+    </div>
+  </section>
+</main>
+
+<footer class="gut" id="foot">Liv Services · Livraison à Yaoundé · Support WhatsApp +237 676 17 82 99</footer>
+
+<datalist id="quartiers"></datalist>
 
 <script>
 (function(){
@@ -143,114 +428,240 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding
     set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
     del(k){ try{ localStorage.removeItem(k); }catch(e){} }
   };
-  const norm = s => (s||"").trim().toUpperCase().replace(/\s+/g,"");
   const pad = n => String(n).padStart(2,"0");
-  const fmtDate = d => `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} à ${pad(d.getHours())}h${pad(d.getMinutes())}`;
-  $("brandName").textContent = CONFIG.entreprise;
+  const fmtDate = d => `${pad(d.getDate())}/${pad(d.getMonth()+1)} à ${pad(d.getHours())}h${pad(d.getMinutes())}`;
+  const digits = s => (s||"").replace(/\D/g,"").replace(/^237(?=\d{9}$)/,"");
+  const icon = (id, cls="i") => `<svg class="${cls}"><use href="#${id}"/></svg>`;
+  const showErr = (el, msg) => { el.innerHTML = icon("i-alert") + "<span></span>"; el.lastChild.textContent = msg; el.hidden = false; };
 
-  let partner = null, qty = 1, hist = [];
+  /* Bande défilante */
+  const msgs = ["Votre livreur en moins de 20 min","Partout à Yaoundé","Commande en 30 secondes","Confirmation sur WhatsApp","Plusieurs livraisons en une course"];
+  const one = msgs.map(m => `<span><svg viewBox="0 0 76 48"><use href="#moto"/></svg>${m}</span>`).join("");
+  $("ticker").innerHTML = one + one;
 
-  function show(view){
-    ["vLogin","vOrder","vDone","vHist"].forEach(v => $(v).hidden = true);
-    $("logoutBtn").hidden = !partner;
-    if(!partner){ $("vLogin").hidden = false; return; }
-    $("partnerName").textContent = partner.nom;
-    $(view === "done" ? "vDone" : "vOrder").hidden = false;
-    $("vHist").hidden = false; renderHist();
-  }
+  /* Quartiers de Yaoundé (suggestions) */
+  const Q = ["Ahala","Anguissa","Awae","Bastos","Biteng","Biyem-Assi","Briqueterie","Centre-ville","Cité Verte","Damas","Efoulan","Ekié","Ekoumdoum","Ekounou","Elig-Edzoa","Elig-Effa","Elig-Essono","Emana","Essos","Etetak","Etoa-Meki","Etoudi","Etoug-Ebe","Febe","Golf","Hippodrome","Jouvence","Kondengui","Madagascar","Mballa II","Melen","Mendong","Messa","Messassi","Mimboman","Mokolo","Mvan","Mvog-Ada","Mvog-Atangana Mballa","Mvog-Betsi","Mvog-Mbi","Mvolyé","Ngoa-Ekellé","Ngousso","Nkoabang","Nkolbisson","Nkoldongo","Nkolmesseng","Nkomo","Nlongkak","Nsam","Nsimeyong","Nyom","Obili","Odza","Olembe","Omnisport","Oyom-Abang","Santa Barbara","Simbock","Tsinga"];
+  $("quartiers").innerHTML = Q.map(q => `<option value="${q}">`).join("");
 
-  async function verifier(id, code){
-    if(!CONFIG.scriptUrl) throw new Error("config");
+  /* ---------- État ---------- */
+  let partner = store.get("liv_partner", null);
+  let hist = [];
+  let stops = [""];
+
+  async function api(params, body){
     const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 15000);
     try{
-      const r = await fetch(`${CONFIG.scriptUrl}?id=${encodeURIComponent(id)}&code=${encodeURIComponent(code)}`, {signal: ctrl.signal});
+      const r = body
+        ? await fetch(CONFIG.scriptUrl, { method:"POST", headers:{"Content-Type":"text/plain"}, body: JSON.stringify(body), signal: ctrl.signal })
+        : await fetch(CONFIG.scriptUrl + "?" + new URLSearchParams(params), { signal: ctrl.signal });
       return await r.json();
     } finally { clearTimeout(t); }
   }
 
-  // --- Connexion
+  function view(v){
+    const guest = v === "guest";
+    $("vGuest").hidden = !guest; $("vHow").hidden = !guest;
+    $("vDashHero").hidden = guest;
+    $("vDash").hidden = v !== "dash"; $("vDone").hidden = v !== "done";
+    $("logoutBtn").hidden = guest;
+    $("foot").style.paddingBottom = v === "dash" ? "120px" : "";
+    if(!guest) renderPartner();
+    window.scrollTo({top:0});
+  }
+
+  function renderPartner(){
+    $("partnerName").textContent = partner.nom;
+    const ok = partner.statut === "OUI";
+    const pill = $("statusPill");
+    pill.className = "status " + (ok ? "ok" : "wait");
+    pill.innerHTML = icon(ok ? "i-check" : "i-hourglass") + (ok ? "Compte validé" : "En attente de validation");
+    $("pendingBox").hidden = ok;
+    if(ok) $("orderErr").hidden = true;
+    const btn = $("orderBtn");
+    btn.classList.toggle("locked", !ok); btn.classList.toggle("btn-sun", ok);
+    btn.querySelector(".i use").setAttribute("href", ok ? "#i-bolt" : "#i-lock");
+    btn.title = ok ? "" : "Disponible après validation de votre compte";
+    renderHist();
+  }
+
+  /* ---------- Onglets ---------- */
+  function tab(signup){
+    $("tLogin").setAttribute("aria-selected", !signup); $("tSignup").setAttribute("aria-selected", signup);
+    $("loginForm").hidden = signup; $("signupForm").hidden = !signup;
+  }
+  $("tLogin").onclick = () => tab(false);
+  $("tSignup").onclick = () => tab(true);
+  $("suSame").onchange = e => { $("suWaBox").hidden = e.target.checked; };
+
+  function busy(btn, on, label){
+    btn.disabled = on;
+    if(on){ btn.dataset.l = btn.innerHTML; btn.innerHTML = `<span class="spin"></span>${label}`; }
+    else if(btn.dataset.l){ btn.innerHTML = btn.dataset.l; }
+  }
+
+  /* ---------- Connexion ---------- */
   $("loginForm").addEventListener("submit", async e => {
     e.preventDefault();
-    const id = norm($("lgId").value), code = $("lgCode").value.trim(), err = $("lgErr");
-    const btn = e.submitter || $("loginForm").querySelector("button");
-    if(!id || !code){ err.textContent = "Saisissez votre identifiant et votre code."; err.hidden = false; return; }
-    btn.disabled = true; btn.textContent = "Vérification…"; err.hidden = true;
+    const id = $("lgId").value.trim(), code = $("lgCode").value.trim(), err = $("lgErr");
+    err.hidden = true;
+    if(!id || !code) return showErr(err, "Saisissez votre téléphone (ou identifiant) et votre code.");
+    busy($("lgBtn"), true, "Connexion…");
     try{
-      const res = await verifier(id, code);
-      if(!res.ok){ err.textContent = "Identifiant ou code incorrect. Vérifiez auprès de Liv Services."; err.hidden = false; return; }
-      partner = { id: res.id, nom: res.nom, code }; hist = res.historique || [];
-      store.set("liv_partner", partner); $("lgCode").value = ""; show("order");
-    }catch(x){
-      err.textContent = x.message === "config" ? "Le site n'est pas encore relié à Google Sheets (voir le guide)." : "Connexion impossible. Vérifiez votre connexion internet et réessayez.";
-      err.hidden = false;
-    }finally{ btn.disabled = false; btn.textContent = "Se connecter"; }
+      const res = await api({ id, code });
+      if(!res.ok) return showErr(err, res.erreur === "bloque" ? "Votre accès est suspendu. Contactez Liv Services." : "Téléphone, identifiant ou code incorrect.");
+      partner = { id: res.id, nom: res.nom, statut: res.statut, quartier: res.quartier || "", code };
+      hist = res.historique || []; store.set("liv_partner", partner);
+      $("lgCode").value = ""; resetOrder(); view("dash");
+    }catch(_){ showErr(err, "Connexion impossible. Vérifiez votre internet et réessayez."); }
+    finally{ busy($("lgBtn"), false); }
   });
-  $("logoutBtn").addEventListener("click", () => { partner = null; store.del("liv_partner"); show("order"); });
 
-  // Reconnexion automatique (et retrait si l'accès a été désactivé)
-  const saved = store.get("liv_partner", null);
-  if(saved){
-    partner = saved; show("order");
-    verifier(saved.id, saved.code).then(res => {
-      if(res.ok){ partner.nom = res.nom; hist = res.historique || []; show($("vDone").hidden ? "order" : "done"); }
-      else { partner = null; store.del("liv_partner"); show("order"); }
-    }).catch(() => {});
-  } else show("order");
+  /* ---------- Inscription ---------- */
+  $("signupForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const err = $("suErr"); err.hidden = true;
+    const d = {
+      action: "inscription",
+      nom: $("suNom").value.trim(), type: $("suType").value, quartier: $("suQuartier").value.trim(),
+      responsable: $("suResp").value.trim(), telephone: digits($("suTel").value),
+      whatsapp: $("suSame").checked ? digits($("suTel").value) : digits($("suWa").value),
+      code: $("suCode").value.trim()
+    };
+    if(!d.nom || !d.type || !d.quartier || !d.responsable) return showErr(err, "Remplissez tous les champs.");
+    if(!/^6\d{8}$/.test(d.telephone)) return showErr(err, "Le numéro doit contenir 9 chiffres et commencer par 6.");
+    if(!/^6\d{8}$/.test(d.whatsapp)) return showErr(err, "Le numéro WhatsApp doit contenir 9 chiffres et commencer par 6.");
+    if(!/^\d{6}$/.test(d.code)) return showErr(err, "Le code doit contenir exactement 6 chiffres.");
+    if(d.code !== $("suCode2").value.trim()) return showErr(err, "Les deux codes ne sont pas identiques.");
+    busy($("suBtn"), true, "Envoi…");
+    try{
+      const res = await api(null, d);
+      if(!res.ok) return showErr(err, res.erreur === "existe" ? "Ce numéro est déjà inscrit. Connectez-vous avec l'onglet « Se connecter »." : "Inscription impossible. Vérifiez les informations et réessayez.");
+      partner = { id: res.id, nom: res.nom, statut: res.statut, quartier: res.quartier, code: d.code };
+      hist = []; store.set("liv_partner", partner); resetOrder(); view("dash");
+    }catch(_){ showErr(err, "Connexion impossible. Vérifiez votre internet et réessayez."); }
+    finally{ busy($("suBtn"), false); }
+  });
 
-  // --- Commande
-  const setQty = n => { qty = Math.max(1, Math.min(50, n)); $("qty").textContent = qty; };
-  $("minus").onclick = () => setQty(qty-1);
-  $("plus").onclick = () => setQty(qty+1);
-  document.querySelectorAll('input[name="when"]').forEach(r => r.addEventListener("change", () => { $("laterBox").hidden = !$("wLater").checked; }));
+  /* ---------- Statut ---------- */
+  async function refresh(){
+    if(!partner) return;
+    try{
+      const res = await api({ id: partner.id, code: partner.code });
+      if(!res.ok){ logout(); return; }
+      partner.nom = res.nom; partner.statut = res.statut; partner.quartier = res.quartier || partner.quartier;
+      hist = res.historique || hist; store.set("liv_partner", partner);
+      if(!$("vDash").hidden || !$("vDone").hidden) renderPartner();
+    }catch(_){}
+  }
+  $("refreshBtn").onclick = async () => { busy($("refreshBtn"), true, "Vérification…"); await refresh(); busy($("refreshBtn"), false); };
+  function logout(){ partner = null; hist = []; store.del("liv_partner"); view("guest"); }
+  $("logoutBtn").onclick = logout;
 
-  $("orderBtn").addEventListener("click", () => {
+  /* ---------- Itinéraire ---------- */
+  let pickup = "";
+  function resetOrder(){ stops = [""]; pickup = partner ? partner.quartier || "" : ""; $("wNow").checked = true; $("laterBox").hidden = true; renderRoute(); }
+
+  function renderRoute(focusIdx){
+    const ol = $("route"); ol.innerHTML = "";
+    const li0 = document.createElement("li"); li0.className = "stop";
+    li0.innerHTML = `<div class="node pick">${icon("i-store")}</div><div class="field"><label for="pickup">Point de retrait</label><input id="pickup" list="quartiers" placeholder="Votre quartier" autocomplete="off"></div><span></span>`;
+    ol.append(li0);
+    li0.querySelector("input").value = pickup;
+    li0.querySelector("input").oninput = e => { pickup = e.target.value; };
+    stops.forEach((s, i) => {
+      const li = document.createElement("li"); li.className = "stop" + (i === stops.length-1 ? " last" : "") + (i === focusIdx ? " new" : "");
+      li.innerHTML = `<div class="node drop">${i+1}</div><div class="field"><label for="stop${i}">Livraison ${i+1} · quartier</label><input id="stop${i}" list="quartiers" placeholder="Ex : Essos, Odza, Mvog-Mbi…" autocomplete="off"></div><button class="rm" type="button" aria-label="Retirer la livraison ${i+1}">${icon("i-x")}</button>`;
+      const inp = li.querySelector("input"); inp.value = s;
+      inp.oninput = e => { stops[i] = e.target.value; };
+      inp.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); addStop(); } };
+      const rm = li.querySelector(".rm"); rm.disabled = stops.length === 1;
+      rm.onclick = () => { stops.splice(i,1); renderRoute(); };
+      ol.append(li);
+    });
+    if(focusIdx !== undefined) $("stop"+focusIdx)?.focus();
+    updateSummary();
+  }
+  function addStop(){
+    if(stops.length >= 20) return;
+    stops.push(""); renderRoute(stops.length-1);
+  }
+  $("addStop").onclick = addStop;
+
+  function heureTxt(){
+    if(!$("wLater").checked) return "Dès que possible";
+    const [hh,mm] = ($("time").value || "12:00").split(":");
+    return ($("day").value === "1" ? "Demain" : "Aujourd'hui") + ` à ${hh}h${mm}`;
+  }
+  function updateSummary(){
+    const n = stops.length, t = `${n} livraison${n>1?"s":""}`;
+    $("countPill").textContent = t; $("ctaCount").textContent = t; $("ctaWhen").textContent = heureTxt();
+  }
+  document.querySelectorAll('input[name="when"]').forEach(r => r.addEventListener("change", () => { $("laterBox").hidden = !$("wLater").checked; updateSummary(); }));
+  $("day").onchange = updateSummary; $("time").oninput = updateSummary;
+
+  /* ---------- Commander ---------- */
+  $("orderBtn").addEventListener("click", async () => {
     const err = $("orderErr"); err.hidden = true;
+    if(partner.statut !== "OUI"){ showErr(err, "Votre compte n'est pas encore validé. Vous pourrez commander dès que Liv Services aura validé votre accès."); err.scrollIntoView({behavior:"smooth",block:"center"}); return; }
+    const lieux = stops.map(s => s.trim());
+    const vide = lieux.findIndex(s => !s);
+    if(!pickup.trim()){ showErr(err, "Indiquez le point de retrait."); $("pickup").focus(); return; }
+    if(vide >= 0){ showErr(err, `Indiquez le quartier de la livraison ${vide+1}.`); $("stop"+vide).focus(); return; }
     const now = new Date();
-    let heure = "Dès que possible";
     if($("wLater").checked){
       const [hh,mm] = ($("time").value || "").split(":").map(Number);
-      if(isNaN(hh)){ err.textContent = "Choisissez une heure."; err.hidden = false; return; }
       const t = new Date(now); t.setDate(t.getDate() + Number($("day").value)); t.setHours(hh, mm||0, 0, 0);
-      if(t < now){ err.textContent = "Cette heure est déjà passée. Choisissez une heure plus tard ou « Demain »."; err.hidden = false; return; }
-      heure = ($("day").value === "1" ? "Demain" : "Aujourd'hui") + ` à ${pad(hh)}h${pad(mm||0)}`;
+      if(isNaN(hh) || t < now){ showErr(err, "Cette heure est déjà passée. Choisissez une heure plus tard ou « Demain »."); return; }
     }
-    const ref = `LIV-${String(now.getFullYear()).slice(2)}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}-${partner.id}`;
+    const heure = heureTxt(), qty = lieux.length;
+    const ref = `LIV-${String(now.getFullYear()).slice(2)}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}-${String(partner.id).slice(-4)}`;
     const msg = [
       `*Demande de livreur – ${CONFIG.entreprise}*`, ``,
       `Partenaire : ${partner.nom} (${partner.id})`,
-      `Nombre de livraisons : ${qty}`,
+      `Point de retrait : ${pickup.trim()}`,
+      `Livraisons (${qty}) :`,
+      ...lieux.map((l,i) => `${i+1}. ${l}`),
       `Heure souhaitée : ${heure}`,
       `Référence : ${ref}`,
       `Demandé le ${fmtDate(now)}`
     ].join("\n");
     const url = `https://wa.me/${CONFIG.whatsappSupport}?text=${encodeURIComponent(msg)}`;
 
-    // Enregistre la commande dans Google Sheets (continue même si WhatsApp s'ouvre)
-    const body = JSON.stringify({ id: partner.id, code: partner.code, ref, qty, heure });
-    if(CONFIG.scriptUrl){
-      let sent = false;
-      try{ sent = navigator.sendBeacon(CONFIG.scriptUrl, new Blob([body], {type:"text/plain"})); }catch(_){}
-      if(!sent){ try{ fetch(CONFIG.scriptUrl, {method:"POST", mode:"no-cors", keepalive:true, headers:{"Content-Type":"text/plain"}, body}); }catch(_){} }
-    }
-    hist.unshift({ date: now.toISOString(), ref, qty, heure }); hist = hist.slice(0, 8);
+    const btn = $("orderBtn"); busy(btn, true, "Envoi…");
+    try{
+      const res = await api(null, { action:"commande", id: partner.id, code: partner.code, ref, qty, heure, retrait: pickup.trim(), lieux });
+      if(res && res.ok === false && res.erreur === "non_valide"){ partner.statut = res.statut || "EN ATTENTE"; store.set("liv_partner", partner); renderPartner(); showErr(err, "Votre compte n'est pas encore validé."); return; }
+      if(res && res.ok === false && res.erreur === "identifiants"){ logout(); return; }
+    }catch(_){ /* réseau lent : on ouvre quand même WhatsApp */ }
+    finally{ busy(btn, false); }
 
-    $("recap").textContent = `${qty} livraison${qty>1?"s":""} · ${heure}\nRéf. ${ref}`;
+    hist.unshift({ date: now.toISOString(), ref, qty, heure, lieux: lieux.map((l,i)=>`${i+1}. ${l}`).join(" | ") }); hist = hist.slice(0,8);
+    const rc = $("recap"); rc.innerHTML = "";
+    [["Point de retrait", pickup.trim()], ["Livraisons", `${qty} · ${lieux.join(", ")}`], ["Heure", heure], ["Référence", ref]].forEach(([k,v]) => {
+      const d = document.createElement("div"); const a = document.createElement("span"); const b = document.createElement("span");
+      a.textContent = k; b.textContent = v; d.append(a,b); rc.append(d);
+    });
     $("waAgain").href = url;
-    show("done");
+    view("done");
     window.location.href = url;
   });
-  $("newOrder").onclick = () => { setQty(1); $("wNow").checked = true; $("laterBox").hidden = true; show("order"); };
+  $("newOrder").onclick = () => { resetOrder(); view("dash"); };
 
   function renderHist(){
-    $("histList").innerHTML = "";
+    const ul = $("histList"); ul.innerHTML = "";
     hist.forEach(h => {
       const li = document.createElement("li");
-      const a = document.createElement("span"); a.textContent = fmtDate(new Date(h.date)) + " · " + h.heure;
-      const b = document.createElement("b"); b.textContent = h.qty + " liv.";
-      li.append(a, b); $("histList").append(li);
+      li.innerHTML = `<span class="hi">${icon("i-box")}</span><span class="t"><b></b><span></span></span><span class="n"></span>`;
+      li.querySelector("b").textContent = fmtDate(new Date(h.date)) + " · " + h.heure;
+      li.querySelector(".t span").textContent = (h.lieux || "").replace(/\d+\.\s/g,"").split(" | ").join(", ") || h.ref;
+      li.querySelector(".n").textContent = h.qty + " liv.";
+      ul.append(li);
     });
     $("histEmpty").hidden = hist.length > 0;
   }
+
+  /* ---------- Démarrage ---------- */
+  if(partner){ resetOrder(); view("dash"); refresh(); } else view("guest");
 })();
 </script>
 </body>
