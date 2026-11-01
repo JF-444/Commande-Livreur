@@ -579,25 +579,25 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
     const now = new Date(), qty = stops.length;
     const lignes = stops.map((s,i) => `${i+1}. ${s.q.trim()} – ${hLabel(s.h)}`);
     const ref = `LIV-${String(now.getFullYear()).slice(2)}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}-${String(partner.id).slice(-4)}`;
+    const heure = $("ctaWhen").textContent;
+    const btn = $("orderBtn"); busy(btn, true, "Envoi…");
+    try{
+      const res = await api(null, { action:"commande", id: partner.id, code: partner.code, ref, qty, heure, lieux: stops.map(s => `${s.q.trim()} (${hLabel(s.h)})`) });
+      if(res && res.ok === false && res.erreur === "non_valide"){ partner.statut = res.statut || "EN ATTENTE"; store.set("liv_partner", partner); renderPartner(); showErr(err, "Votre compte n'est pas encore validé."); return; }
+      if(res && res.ok === false && res.erreur === "identifiants"){ logout(); return; }
+      if(res && res.ok){ if(res.telephone) partner.tel = res.telephone; if(res.quartier) partner.quartier = res.quartier; store.set("liv_partner", partner); }
+    }catch(_){ /* réseau lent : on ouvre quand même WhatsApp */ }
+    finally{ busy(btn, false); }
+
     const msg = [
       `*Demande de livreur – ${CONFIG.entreprise}*`, ``,
       `Partenaire : ${partner.nom}`,
       partner.tel ? `Téléphone : ${fmtTel(partner.tel)}` : null,
       partner.quartier ? `Adresse de retrait : ${partner.quartier}` : null,
       ``, `*Livraisons (${qty})*`, ...lignes, ``,
-      `Référence : ${ref}`,
       `Demandé le ${fmtDate(now)}`
     ].filter(l => l !== null).join("\n");
     const url = `https://wa.me/${CONFIG.whatsappSupport}?text=${encodeURIComponent(msg)}`;
-    const heure = $("ctaWhen").textContent;
-
-    const btn = $("orderBtn"); busy(btn, true, "Envoi…");
-    try{
-      const res = await api(null, { action:"commande", id: partner.id, code: partner.code, ref, qty, heure, lieux: stops.map(s => `${s.q.trim()} (${hLabel(s.h)})`) });
-      if(res && res.ok === false && res.erreur === "non_valide"){ partner.statut = res.statut || "EN ATTENTE"; store.set("liv_partner", partner); renderPartner(); showErr(err, "Votre compte n'est pas encore validé."); return; }
-      if(res && res.ok === false && res.erreur === "identifiants"){ logout(); return; }
-    }catch(_){ /* réseau lent : on ouvre quand même WhatsApp */ }
-    finally{ busy(btn, false); }
 
     hist.unshift({ date: now.toISOString(), ref, qty, heure, lieux: stops.map(s => s.q.trim()).join(", ") }); hist = hist.slice(0,8);
     const rc = $("recap"); rc.innerHTML = "";
