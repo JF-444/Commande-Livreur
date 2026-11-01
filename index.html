@@ -132,6 +132,7 @@ svg.i{width:1.2em;height:1.2em;flex:none;fill:none;stroke:currentColor;stroke-wi
 .status{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-weight:700;font-size:13px}
 .status.ok{background:var(--green);color:#fff}
 .status.wait{background:var(--yellow);color:var(--ink)}
+.hello-r{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .dash{margin-top:-40px;display:grid;grid-template-columns:1.3fr .7fr;gap:18px;align-items:start;padding-bottom:120px;position:relative}
 .dash > *{min-width:0}
 .pending{display:flex;gap:14px;align-items:flex-start;background:#FFF6DA;border:1px solid #F5D778;border-radius:20px;padding:16px 18px;margin-bottom:14px}
@@ -267,7 +268,7 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
   <section class="hero gut" id="vGuest" hidden>
     <div class="max hero-grid">
       <div>
-        <span class="live"><span class="pulse"></span><b>2 livreurs</b> à proximité</span>
+        <span class="live"><span class="pulse"></span><span><b>2 livreurs</b> à proximité</span></span>
         <h1>Votre livreur en <em>moins de 20&nbsp;min.</em></h1>
         <p class="lead">Ajoutez vos quartiers de livraison, appuyez sur Commander : un livreur Liv passe chez vous.</p>
         <div class="ride" aria-hidden="true"><div class="road"></div><svg class="bike"><use href="#bike"/></svg></div>
@@ -316,7 +317,7 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
         <p>Bonjour,</p><h1 id="partnerName"></h1>
         <div class="meta"><span id="metaAddr"><svg class="i"><use href="#i-pin"/></svg><b></b></span><span id="metaTel"><svg class="i"><use href="#i-phone"/></svg><b></b></span></div>
       </div>
-      <span class="status" id="statusPill"></span>
+      <div class="hello-r"><span class="live"><span class="pulse"></span><span><b>2 livreurs</b> à proximité<span id="liveQ"></span></span></span><span class="status" id="statusPill"></span></div>
     </div>
   </section>
 </div>
@@ -404,7 +405,7 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
   const COLORS = ["#F28A1A","#E0A800","#1E9E5A","#2E7A5C"];
 
   /* Bande défilante */
-  const msgs = ["Votre livreur en moins de 20 min","2 livreurs à proximité","Partout à Yaoundé","Plusieurs livraisons en une course","Confirmation sur WhatsApp"];
+  const msgs = ["Votre livreur en moins de 20 min","Commande en 30 secondes","Partout à Yaoundé","Plusieurs livraisons en une course","Confirmation sur WhatsApp"];
   const one = msgs.map((m,i) => `<span><i style="background:${["#F28A1A","#1E9E5A","#0F3D2E","#2E7A5C","#F28A1A"][i]}"></i>${m}</span>`).join("");
   $("ticker").innerHTML = one + one;
 
@@ -437,7 +438,7 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
   }
 
   function renderPartner(){
-    $("partnerName").textContent = partner.nom;
+    $("partnerName").textContent = partner.nom; $("liveQ").textContent = partner.quartier ? " de " + partner.quartier : "";
     $("metaAddr").hidden = !partner.quartier; $("metaAddr").querySelector("b").textContent = partner.quartier || "";
     $("metaTel").hidden = !partner.tel; $("metaTel").querySelector("b").textContent = fmtTel(partner.tel);
     const ok = partner.statut === "OUI";
