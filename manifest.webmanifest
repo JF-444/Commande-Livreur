@@ -1,0 +1,23 @@
+{
+  "name": "Liv Services Partenaires",
+  "short_name": "Liv Partenaires",
+  "description": "Commandez un livreur Liv Services en quelques secondes, partout à Yaoundé.",
+  "lang": "fr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0F3D2E",
+  "theme_color": "#0F3D2E",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
