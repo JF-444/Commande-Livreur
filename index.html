@@ -12,6 +12,7 @@
 <meta name="robots" content="noindex">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap">
@@ -217,6 +218,19 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
 }
 @media (min-width:521px){.cta .btn .short{display:none}.stop-body label .pre{display:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.top-btns{display:flex;gap:8px;align-items:center}
+.chip-btn.inst{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+@media (max-width:420px){#logoutBtn span{display:none}}
+.sheet-bg{position:fixed;inset:0;z-index:50;background:rgba(16,35,27,.55);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--paper);color:var(--ink);width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:22px 20px max(22px,env(safe-area-inset-bottom));animation:up .25s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.sheet h3{font:800 21px/1.2 var(--display);margin:0 0 4px}
+.sheet .sub{margin:0 0 14px}
+.sheet ol{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-direction:column;gap:10px}
+.sheet li{display:flex;align-items:center;gap:12px;background:var(--cream);border-radius:14px;padding:12px 14px;font-size:15px}
+.sheet li b.k{width:28px;height:28px;border-radius:9px;background:var(--forest);color:var(--yellow);display:grid;place-items:center;font:800 14px/1 var(--display);flex:none}
+.sheet li .ico{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:8px;background:#fff;border:1px solid var(--line);color:#0A7AFF;vertical-align:middle;margin:0 2px}
+.sheet .arrow{text-align:center;color:var(--orange);font-weight:700;font-size:13px;margin-top:-4px}
 </style>
 </head>
 <body>
@@ -262,7 +276,7 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
       <span class="brand-mark"><img alt="" src="logo.png"></span>
       <span><b>Liv Services</b><small>Espace partenaires</small></span>
     </a>
-    <button class="chip-btn" id="logoutBtn" hidden><svg class="i"><use href="#i-out"/></svg>Déconnexion</button>
+    <div class="top-btns"><button class="chip-btn inst" id="installBtn" type="button" hidden><svg class="i"><use href="#i-dl"/></svg>Installer</button><button class="chip-btn" id="logoutBtn" hidden><svg class="i"><use href="#i-out"/></svg><span>Déconnexion</span></button></div>
   </div></div>
 
   <section class="hero gut" id="vGuest" hidden>
@@ -386,6 +400,21 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
 
 <footer class="gut" id="foot">Liv Services · Livraison à Yaoundé · Support +237 676 17 82 99</footer>
 <datalist id="quartiers"></datalist>
+<div class="sheet-bg" id="instSheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="instTitle">
+    <h3 id="instTitle">Installer Liv Partenaires</h3>
+    <p class="sub">Ajoutez l'app sur votre écran d'accueil pour commander en un geste.</p>
+    <ol id="instSteps"></ol>
+    <p class="arrow" id="instArrow" hidden>Le bouton Partager se trouve en bas de Safari ↓</p>
+    <button class="btn btn-forest btn-block" id="instClose" type="button">J'ai compris</button>
+  </div>
+</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></symbol>
+  <symbol id="i-addsq" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></symbol>
+</svg>
 
 <script>
 (function(){
@@ -625,6 +654,30 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
     });
     $("histEmpty").hidden = hist.length > 0;
   }
+
+  /* Installation sur l'écran d'accueil */
+  let deferred = null;
+  const standalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isMobile = isIOS || /android/i.test(navigator.userAgent);
+  $("installBtn").hidden = standalone() || !isMobile;
+  addEventListener("beforeinstallprompt", e => { e.preventDefault(); deferred = e; if(!standalone()) $("installBtn").hidden = false; });
+  addEventListener("appinstalled", () => { $("installBtn").hidden = true; deferred = null; });
+  function steps(list){ $("instSteps").innerHTML = list.map((h,i) => `<li><b class="k">${i+1}</b><span>${h}</span></li>`).join(""); }
+  $("installBtn").onclick = async () => {
+    if(deferred){ deferred.prompt(); const r = await deferred.userChoice; if(r.outcome === "accepted") $("installBtn").hidden = true; deferred = null; return; }
+    if(isIOS){
+      steps([`Appuyez sur <span class="ico">${icon("i-share")}</span> <b>Partager</b>`, `Choisissez <span class="ico">${icon("i-addsq")}</span> <b>Sur l'écran d'accueil</b>`, `Appuyez sur <b>Ajouter</b> en haut à droite`]);
+      $("instArrow").hidden = false;
+    } else {
+      steps([`Appuyez sur <span class="ico">${icon("i-dots")}</span> en haut à droite du navigateur`, `Choisissez <b>Installer l'application</b> ou <b>Ajouter à l'écran d'accueil</b>`, `Confirmez avec <b>Installer</b>`]);
+      $("instArrow").hidden = true;
+    }
+    $("instSheet").hidden = false;
+  };
+  $("instClose").onclick = () => { $("instSheet").hidden = true; };
+  $("instSheet").onclick = e => { if(e.target.id === "instSheet") $("instSheet").hidden = true; };
+  if("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 
   if(partner){ resetOrder(); view("dash"); refresh(); } else view("guest");
 })();
