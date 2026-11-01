@@ -560,9 +560,9 @@ footer{color:var(--muted);font-size:13px;padding-block:20px 36px;text-align:cent
     const out = [["asap","Dès que possible"]];
     const now = new Date(); const t = new Date(now);
     const q = d => `${pad(d.getHours())}h${pad(d.getMinutes())}`;
-    t.setSeconds(0, 0); t.setMinutes(Math.ceil((t.getMinutes() + 15) / 15) * 15);
+    t.setSeconds(0, 0); t.setMinutes(Math.ceil((t.getMinutes() + 15) / 15) * 15); if(t.getHours() * 60 + t.getMinutes() < 8 * 60 + 15) t.setHours(8, 15, 0, 0);
     while(t.getDate() === now.getDate() && t.getHours() * 60 + t.getMinutes() <= 21 * 60){ out.push([q(t), q(t)]); t.setMinutes(t.getMinutes() + 15); }
-    for(let m = 7 * 60; m <= 21 * 60; m += 15){ const v = `Demain ${pad(Math.floor(m / 60))}h${pad(m % 60)}`; out.push([v, v]); }
+    for(let m = 8 * 60 + 15; m <= 21 * 60; m += 15){ const v = `Demain ${pad(Math.floor(m / 60))}h${pad(m % 60)}`; out.push([v, v]); }
     return out;
   }
   const optHtml = o => { let h = "", g = ""; for(const [v, l] of o){ const ng = v === "asap" ? "" : v.startsWith("Demain") ? "Demain" : "Aujourd'hui"; if(ng !== g){ if(g) h += "</optgroup>"; if(ng) h += `<optgroup label="${ng}">`; g = ng; } h += `<option value="${v}">${l}</option>`; } return h + (g ? "</optgroup>" : ""); };
